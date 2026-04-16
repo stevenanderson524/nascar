@@ -414,7 +414,18 @@ h1, h2, h3 {
   color: var(--color-wgi-navy);
 }
 
-/* WGI button overrides */
+/* WGI button overrides - larger block-style buttons */
+a.btn {
+  padding: 14px 32px;
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  border-width: 2px;
+  transition: all 0.2s ease;
+}
+
 a.btn-negative {
   background-color: var(--color-wgi-red);
   border-color: var(--color-wgi-red);
@@ -433,7 +444,7 @@ a.btn-primary.btn-outline {
 }
 
 a.btn-secondary {
-  background-color: #fff;
+  background-color: transparent;
   border-color: var(--color-wgi-navy);
   color: var(--color-wgi-navy);
 }
