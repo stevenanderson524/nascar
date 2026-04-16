@@ -84,12 +84,20 @@
   }
 }
 
-/* WGI Card overrides */
+/* WGI Card overrides - exact from theglen.com */
 
-/* Card background fix for light mode */
+/* Card styling - theglen.com: 16px radius, specific border/shadow */
 .card {
-  background-color: #f1f1f1;
+  background-color: #fff;
   color: #000;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Card image aspect ratio - theglen.com uses ~2.21:1 (409x185px) */
+.card:not(.quiet) .card-picture-container {
+  padding-bottom: 45.2%;
 }
 
 /* Badge/tag styling for first text in card content (like "FULL WEEKEND") */
@@ -102,32 +110,46 @@
   margin-bottom: 4px;
 }
 
-/* Card title (second strong text) */
+/* Card title - theglen.com: 18px */
 .card:not(.quiet) .card-content-container > p:nth-child(2) {
-  font-size: var(--body-font-size-l);
+  font-size: 18px;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--color-wgi-navy);
   margin-bottom: 8px;
 }
 
-/* Quick links icon tiles */
+/* Card description - theglen.com: 14px */
+.card:not(.quiet) .card-content-container > p:nth-child(n+3) {
+  font-size: 14px;
+}
+
+/* Quick links icon tiles - theglen.com: .857em, 900 weight */
 .card.quiet.center .card-content-container {
   text-align: center;
   padding: 8px;
 }
 
 .card.quiet.center .card-content-container p {
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
-  font-size: var(--body-font-size-s);
+  font-size: 0.857em;
   letter-spacing: 0.03em;
   color: var(--color-wgi-navy);
 }
 
-/* Multiple CTA buttons in card */
+/* Card CTA buttons - theglen.com: height 40px, padding 12px 25px, 14px, 2px radius */
 .card .card-cta-container {
   flex-wrap: wrap;
   gap: 8px;
   justify-content: start;
+}
+
+.card .card-cta-container a.btn {
+  height: 40px;
+  padding: 12px 25px;
+  font-size: 14px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
 }

@@ -371,7 +371,7 @@ svg {
 
 @media (width >= 1440px) {
   :root {
-    --grid-container-width: 1200px;
+    --grid-container-width: 1300px;
   }
 }
 
@@ -391,39 +391,50 @@ aem-sidekick {
 
 /* =============================================
    Watkins Glen International - Brand Overrides
+   Exact values extracted from theglen.com
    ============================================= */
 :root {
-  --color-wgi-navy: #002D62;
-  --color-wgi-red: #CC0000;
-  --color-wgi-light-blue: #004C99;
+  /* WGI brand colors - exact from theglen.com */
+  --color-wgi-navy: #004174;
+  --color-wgi-red: #da322a;
+  --color-wgi-accent-blue: #0664a8;
   --color-brand: var(--color-wgi-navy);
   --color-accent: var(--color-wgi-red);
+
+  /* Override header height to match theglen.com (75.5px) */
+  --header-height: 75px;
 }
 
-/* Force light mode for all color calculations */
+/* Force light mode */
 body {
   background-color: #fff;
   color: #000;
 }
 
-/* WGI uppercase bold headings */
+/* WGI headings - exact from theglen.com */
 h1, h2, h3 {
   text-transform: uppercase;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--color-wgi-navy);
 }
 
-/* WGI button overrides - larger block-style buttons */
+/* Section headings use clamp for responsive sizing */
+.section > .default-content > h2 {
+  font-size: clamp(30px, 4.5vw, 64px);
+}
+
+/* WGI button overrides - exact from theglen.com */
 a.btn {
-  padding: 14px 32px;
-  font-size: var(--body-font-size-s);
+  padding: 0.75em 1em;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-radius: 4px;
-  border-width: 2px;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  border: none;
   transition: all 0.2s ease;
+  text-align: center;
 }
 
 a.btn-negative {
@@ -441,11 +452,12 @@ a.btn-primary {
 a.btn-primary.btn-outline {
   color: var(--color-wgi-navy);
   background: transparent;
+  border: 2px solid var(--color-wgi-navy);
 }
 
 a.btn-secondary {
   background-color: transparent;
-  border-color: var(--color-wgi-navy);
+  border: 2px solid var(--color-wgi-navy);
   color: var(--color-wgi-navy);
 }
 
@@ -454,26 +466,28 @@ a {
   color: var(--color-wgi-navy);
 }
 
-/* Secondary nav bar section */
+/* Secondary nav bar - exact from theglen.com trending bar */
 .section.secondary-nav {
-  padding: 12px 0;
+  padding: 5px 70px;
 }
 
 .section.secondary-nav .default-content p {
   margin: 0;
   display: flex;
-  justify-content: center;
-  gap: 32px;
+  justify-content: space-evenly;
   flex-wrap: wrap;
+  align-items: center;
+  min-height: 31px;
 }
 
 .section.secondary-nav a {
   color: #fff;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: 600;
-  font-size: var(--body-font-size-s);
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: 0.857em;
+  letter-spacing: 0.03em;
+  padding: 0 18px;
 }
 
 .section.secondary-nav a:hover {
@@ -482,7 +496,7 @@ a {
 
 /* Dark-scheme card overrides for hospitality section */
 .dark-scheme .card {
-  background: linear-gradient(180deg, var(--color-wgi-light-blue) 0%, var(--color-wgi-navy) 100%);
+  background: linear-gradient(180deg, var(--color-wgi-accent-blue) 0%, var(--color-wgi-navy) 100%);
   color: #fff;
 }
 
@@ -507,17 +521,30 @@ a {
   color: #fff;
 }
 
-/* Quick links section - quiet center cards as icon tiles */
+/* Quick links section - exact from theglen.com */
 .section.grid-6 .card.quiet.center {
-  border: 1px solid var(--color-gray-200);
-  border-radius: 4px;
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
   padding: 24px 12px;
   transition: all 0.2s ease;
+  width: 16%;
+  min-width: 120px;
 }
 
 .section.grid-6 .card.quiet.center:hover {
-  border-color: var(--color-wgi-navy);
-  box-shadow: 0 2px 8px rgba(0, 45, 98, 0.15);
+  background-color: var(--color-wgi-accent-blue);
+  border-color: var(--color-wgi-accent-blue);
+}
+
+.section.grid-6 .card.quiet.center:hover .card-content-container p {
+  color: #fff;
+}
+
+/* Quick link icon sizing - theglen.com uses 61px */
+.section.grid-6 .card.quiet.center img,
+.section.grid-6 .card.quiet.center svg {
+  width: 61px;
+  height: 61px;
 }
 
 /* Sponsors section */
@@ -541,15 +568,15 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* Fix button hover states for WGI */
+/* Button hover states - WGI */
 a.btn-negative:hover {
-  background-color: #a30000;
-  border-color: #a30000;
+  background-color: #b12820;
+  border-color: #b12820;
 }
 
 a.btn-primary:hover {
-  background-color: #001d42;
-  border-color: #001d42;
+  background-color: #003058;
+  border-color: #003058;
 }
 
 a.btn-secondary:hover {

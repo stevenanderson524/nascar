@@ -38,7 +38,7 @@ header {
       "brand"
       "nav"
       "actions";
-    grid-template-rows: var(--header-height) auto 1fr;
+    grid-template-rows: 75px auto 1fr;
   }
 
   .action-wrapper {
@@ -247,23 +247,25 @@ header {
   }
 }
 
-/* WGI Header overrides */
+/* WGI Header overrides - exact from theglen.com */
 header {
   background-color: #fff;
   border-bottom: none;
+  min-height: 75px;
 
   .brand-section .default-content a,
   .brand-section .default-content p {
     color: var(--color-wgi-navy);
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
-    font-size: var(--body-font-size-l);
+    font-size: 1em;
     letter-spacing: 0.03em;
   }
 
+  /* WGI logo - theglen.com uses 50.22px height */
   .brand-section .default-content svg.icon-wgi-logo {
     width: auto;
-    height: 48px;
+    height: 50px;
     display: inline-block;
     vertical-align: middle;
     margin-right: 0;
@@ -272,23 +274,43 @@ header {
   .brand-section .default-content svg:not(.icon-wgi-logo),
   .brand-section .default-content img {
     width: auto;
-    height: 40px;
+    height: 50px;
   }
 
   .brand-section .default-content .brand-text {
     display: none;
   }
 
+  /* Nav links - theglen.com: 1em, 700, uppercase, 50px spacing */
   .main-nav-section .main-nav-link {
     text-transform: uppercase;
     font-weight: 700;
-    font-size: var(--body-font-size-s);
-    letter-spacing: 0.04em;
+    font-size: 1em;
+    letter-spacing: 0.02em;
     color: var(--color-wgi-navy);
+    position: relative;
+    line-height: 75px;
+  }
+
+  /* Hover underline effect - theglen.com uses 5px solid accent blue */
+  .main-nav-section .main-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: var(--color-wgi-accent-blue, #0664a8);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
   }
 
   .main-nav-section .main-nav-link:hover {
-    color: var(--color-wgi-red);
+    color: var(--color-wgi-navy);
+  }
+
+  .main-nav-section .main-nav-link:hover::after {
+    transform: scaleX(1);
   }
 }
 
@@ -354,7 +376,16 @@ header {
     .main-nav-section {
       .main-nav-list {
         display: flex;
-        gap: var(--spacing-l);
+        gap: 0;
+      }
+
+      /* theglen.com: nav items spaced with padding-left: 50px */
+      .main-nav-item {
+        padding-left: 50px;
+      }
+
+      .main-nav-item:first-child {
+        padding-left: 0;
       }
 
       .main-nav-item {
