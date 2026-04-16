@@ -261,7 +261,8 @@ header {
     letter-spacing: 0.03em;
   }
 
-  .brand-section .default-content svg {
+  .brand-section .default-content svg,
+  .brand-section .default-content img {
     width: auto;
     height: 40px;
   }

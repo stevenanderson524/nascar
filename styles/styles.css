@@ -514,3 +514,34 @@ a {
   color: var(--color-gray-600);
   font-weight: 600;
 }
+
+/* Sponsor logo image sizing */
+.section.center > .default-content > p > picture > img {
+  max-width: 200px;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Partner text styling */
+.section.center > .default-content > p:last-of-type {
+  color: var(--color-gray-500);
+  font-size: var(--body-font-size-s);
+  letter-spacing: 0.05em;
+}
+
+/* Fix button hover states for WGI */
+a.btn-negative:hover {
+  background-color: #a30000;
+  border-color: #a30000;
+}
+
+a.btn-primary:hover {
+  background-color: #001d42;
+  border-color: #001d42;
+}
+
+a.btn-secondary:hover {
+  background-color: var(--color-wgi-navy);
+  color: #fff;
+}
