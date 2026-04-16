@@ -79,6 +79,18 @@
   }
 }
 
+/* WGI Columns overrides */
+.columns.image-cover .cover-row .cover-content h2 {
+  color: var(--color-wgi-navy);
+}
+
+.columns.image-cover .cover-row .cover-content h3 {
+  color: var(--color-wgi-red);
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
 @media (width >= 900px) {
   .columns {
     .row {

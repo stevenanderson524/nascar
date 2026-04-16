@@ -27,6 +27,26 @@ footer {
   }
 }
 
+/* WGI Footer overrides */
+footer {
+  background-color: var(--color-wgi-navy);
+  color: #fff;
+  padding: 32px 0;
+
+  a {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  a:hover {
+    color: #fff;
+  }
+
+  .section-copyright p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: var(--body-font-size-xs);
+  }
+}
+
 @media (width >= 900px) {
   footer {
     margin: 0;
