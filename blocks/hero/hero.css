@@ -1,296 +1,121 @@
+/* Hero block - full-width video-style hero with overlay text */
+.hero-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
 .hero {
-  --gradient-start: rgb(var(--color-dark-base) / 80%);
-  --gradient-end: rgb(var(--color-dark-base) / 20%);
-  --default-min-height: 360px;
-  --min-height: var(--default-min-height);
+  --hero-bg: var(--color-wgi-navy, #004174);
+  --hero-text: #fff;
+  --hero-min-height: 80vh;
 
   position: relative;
-  color: #fff;
+  min-height: var(--hero-min-height);
+  background: var(--hero-bg);
+  color: var(--hero-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-
-  &.small {
-    --min-height: 180px;
-  }
-
-  &.large {
-    --min-height: 720px;
-  }
-
-  &.full {
-    --min-height: calc(100vh - var(--header-height));
-  }
-
-  &.light {
-    --gradient-start: rgb(var(--color-light-base) / 80%);
-
-    color: var(--color-dark);
-  }
-
-  &.dark {
-    color: var(--color-light);
-  }
-
-  &.quiet-background {
-    .hero-background div::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      backdrop-filter: blur(200px);
-      mask-image: linear-gradient(to right bottom, rgb(0 0 0 / 80%) 40%, rgb(0 0 0 / 20%) 125%);
-    }
-  }
-
-  &.hero-text-start {
-    img {
-      object-position: 10% 50%;
-    }
-  }
-
-  &.hero-text-end {
-    img {
-      object-position: 90% 50%;
-    }
-  }
-
-  .hero-background {
-    picture {
-      position: absolute;
-      inset: 0;
-    }
-
-    img {
-      display: block;
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-
-    > div {
-      /* Used for quiet-background */
-      background-color: var(--color-background);
-      position: absolute;
-      inset: 0;
-    }
-
-    video {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .hero-foreground {
-    min-height: var(--min-height);
-    padding: var(--spacing-xxl) 0;
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    background: linear-gradient(90deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-
-    p {
-      margin: 8px 0;
-    }
-
-    .fg-text {
-      width: var(--grid-container-width);
-      margin: 0 auto;
-    }
-
-    div > *:first-child {
-      margin-top: 0;
-    }
-
-    div > *:last-child {
-      margin-bottom: 0;
-    }
-
-    .hero-detail {
-      margin: 0;
-    }
-
-    .hero-heading {
-      margin: 0;
-    }
-  }
-
-  &.stack {
-    .hero-background {
-      > div {
-        min-height: var(--default-min-height);
-        position: relative;
-      }
-    }
-
-    .hero-foreground {
-      background: #111;
-    }
-
-    &.light {
-      .hero-foreground {
-        background: #f9f9f9;
-      }
-    }
-
-    &.hero-text-start {
-      img {
-        object-position: 80% 50%;
-      }
-    }
-
-    &.hero-text-end {
-      img {
-        object-position: 20% 50%;
-      }
-    }
-  }
-
-  &.center {
-    .hero-foreground {
-      justify-content: center;
-      text-align: center;
-    }
-  }
 }
 
-@media (width >= 600px) {
-  .hero {
-    .hero-foreground {
-      display: grid;
-      grid-template-columns: 45% 45%;
-      justify-content: space-between;
-      max-width: var(--grid-container-width);
-      margin: 0 auto;
-      background: unset;
-
-      .fg-text {
-        width: unset;
-        margin: unset;
-      }
-    }
-
-    &.center {
-      .hero-foreground {
-        display: flex;
-      }
-    }
-
-    &.stack {
-      .hero-background {
-        > div {
-          position: absolute;
-        }
-      }
-
-      .hero-foreground {
-        background: unset;
-      }
-
-      &.hero-text-start {
-        img {
-          object-position: 0% 50%;
-        }
-      }
-
-      &.hero-text-end {
-        img {
-          object-position: 100% 50%;
-        }
-      }
-    }
-  }
+/* Row 1: Background image */
+.hero > div:first-child {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
-@container (width < 400px) {
-  .layout-bento .hero .hero-foreground {
-    grid-template-columns: 1fr;
-  }
+.hero > div:first-child > div {
+  height: 100%;
 }
 
-@media (width >= 900px) {
-  .hero {
-    .hero-foreground {
-      grid-template-columns: 40% 40%;
-    }
-  }
+.hero > div:first-child picture,
+.hero > div:first-child img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-@media (width >= 1200px) {
-  .hero {
-    .hero-foreground {
-      grid-template-columns: 33% 33%;
-    }
-  }
-}
-
-/* WGI Hero overrides - exact from theglen.com */
-
-/* theglen.com hero large = 870px */
-.hero.large {
-  --min-height: 870px;
-}
-
-/* Dark overlay on hero background - theglen.com uses opacity 0.4 */
-.hero .hero-background::after {
+/* Dark overlay on top of image */
+.hero > div:first-child::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 40%);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
-.hero .hero-foreground {
+/* Row 2: Text content */
+.hero > div:nth-child(2) {
+  position: relative;
   z-index: 2;
-}
-
-/* Hero heading - theglen.com: 36px mobile, 70px desktop */
-.hero .hero-foreground .hero-heading {
-  text-transform: uppercase;
-  font-weight: 900;
-  letter-spacing: 0.03em;
-  text-shadow: 2px 2px 8px rgb(0 0 0 / 50%);
-  color: #fff;
-  font-size: 36px;
-}
-
-/* Hero subtitle - theglen.com: 26px mobile, 30px desktop */
-.hero .hero-foreground p {
-  text-shadow: 1px 1px 4px rgb(0 0 0 / 40%);
-  color: #fff;
-  font-size: 26px;
-}
-
-/* Hero buttons - theglen.com: 263px wide, 14px, 0.75em 1em padding, 2px radius */
-.hero .hero-foreground a.btn {
-  text-shadow: none;
-  width: 263px;
   text-align: center;
-  padding: 0.75em 1em;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 2px;
-  border: none;
+  padding: 60px 40px 100px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* Button gap - theglen.com uses 15px gap between hero buttons */
-.hero .hero-foreground p:has(.btn) {
+.hero > div:nth-child(2) > div {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero h2 {
+  font-size: clamp(36px, 6vw, 70px);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.hero > div:nth-child(2) p {
+  font-size: clamp(16px, 2.5vw, 30px);
+  line-height: 1.2;
+  margin: 0;
+  color: #fff;
+}
+
+/* CTA buttons - using ak.js btn system */
+.hero .btn-group {
+  display: flex;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.hero.center .hero-foreground .fg-text {
-  max-width: 700px;
+.hero a.btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  color: #fff;
 }
 
-@media (width >= 900px) {
-  .hero .hero-foreground .hero-heading {
-    font-size: 70px;
+.hero a.btn-negative {
+  background: var(--color-wgi-red, #da322a);
+  border-color: var(--color-wgi-red, #da322a);
+}
+
+.hero a.btn-negative:hover {
+  background: #b12820;
+}
+
+.hero a.btn-primary {
+  background: var(--color-wgi-navy, #004174);
+  border-color: var(--color-wgi-navy, #004174);
+  color: #fff;
+}
+
+@media (width < 600px) {
+  .hero {
+    --hero-min-height: 50vh;
   }
 
-  .hero .hero-foreground p:not(:has(.btn)) {
-    font-size: 30px;
+  .hero > div:nth-child(2) {
+    padding: 40px 20px;
   }
 }

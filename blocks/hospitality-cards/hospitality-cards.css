@@ -1,0 +1,131 @@
+/* Hospitality Cards Block */
+.hospitality-cards-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.hospitality-cards {
+  --hc-bg: #004174;
+  --hc-text: #fff;
+  --hc-card-bg: #fff;
+  --hc-card-text: #000;
+  --hc-cta-bg: #0664a8;
+  --hc-cta-text: #fff;
+  --hc-card-radius: 8px;
+
+  background-color: var(--hc-bg);
+  color: var(--hc-text);
+  padding: 20px 50px 40px;
+}
+
+/* Heading row */
+.hospitality-cards .hospitality-cards-heading {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.hospitality-cards .hospitality-cards-heading h2 {
+  color: var(--hc-text);
+  font-size: 32px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Card grid */
+.hospitality-cards .hospitality-cards-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Individual card */
+.hospitality-cards .hospitality-card {
+  background: var(--hc-card-bg);
+  color: var(--hc-card-text);
+  border-radius: var(--hc-card-radius);
+  overflow: hidden;
+  flex: 1 1 0;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card image */
+.hospitality-cards .hospitality-card-image {
+  width: 100%;
+  overflow: hidden;
+}
+
+.hospitality-cards .hospitality-card-image img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Card content */
+.hospitality-cards .hospitality-card-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.hospitality-cards .hospitality-card-content h3 {
+  color: var(--hc-card-text);
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  line-height: 1.15;
+}
+
+.hospitality-cards .hospitality-card-content p {
+  color: var(--hc-card-text);
+  font-size: 14px;
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+
+/* CTA button — links in card content */
+.hospitality-cards .hospitality-card-content p:last-child {
+  margin-top: auto;
+}
+
+.hospitality-cards .hospitality-card-content a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hc-cta-bg);
+  color: var(--hc-cta-text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 2px;
+  height: 40px;
+  padding: 0 16px;
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hospitality-cards .hospitality-card-content a:hover {
+  background: #054d80;
+}
+
+/* Responsive: stack cards on mobile */
+@media (max-width: 768px) {
+  .hospitality-cards .hospitality-cards-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hospitality-cards .hospitality-card {
+    max-width: 320px;
+    width: 100%;
+  }
+}
