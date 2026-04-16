@@ -3,11 +3,10 @@ export default async function decorate(block) {
 
   rows.forEach((row) => {
     const cells = [...row.children];
-    // Cell 0: image, Cell 1: content (h2, tag, description, CTAs)
+    if (cells.length < 2) return;
+
     const imageCell = cells[0];
     const contentCell = cells[1];
-
-    if (!imageCell || !contentCell) return;
 
     // Style image cell
     imageCell.classList.add('ticket-cards-image');
@@ -15,38 +14,50 @@ export default async function decorate(block) {
     // Build content structure
     contentCell.classList.add('ticket-cards-content');
 
-    // Separate CTAs from description content
+    // Process CTAs - find all links and categorize them
     const allLinks = [...contentCell.querySelectorAll('a')];
     const ctaContainer = document.createElement('div');
     ctaContainer.classList.add('ticket-cards-cta');
 
-    if (allLinks.length > 0) {
-      // First CTA = Buy Now (red)
-      const buyLink = allLinks[0];
-      buyLink.classList.add('cta-buy');
-      // Remove EDS button classes
-      buyLink.classList.remove('button');
-      const buyContainer = buyLink.closest('.button-container') || buyLink.closest('p');
-      if (buyContainer) {
-        buyContainer.remove();
-      }
-      ctaContainer.appendChild(buyLink);
+    allLinks.forEach((link) => {
+      const parent = link.parentElement;
 
-      // Remaining CTAs go in a row
-      if (allLinks.length > 1) {
-        const ctaRow = document.createElement('div');
-        ctaRow.classList.add('cta-row');
-        allLinks.slice(1).forEach((link) => {
-          link.classList.add('cta-secondary');
-          link.classList.remove('button');
-          const container = link.closest('.button-container') || link.closest('p');
-          if (container) {
-            container.remove();
-          }
-          ctaRow.appendChild(link);
-        });
-        ctaContainer.appendChild(ctaRow);
+      // Determine button type
+      const isDel = parent && parent.tagName === 'DEL';
+
+      // Remove EDS button classes
+      link.classList.remove('button', 'primary', 'secondary');
+
+      if (isDel) {
+        link.classList.add('btn', 'btn-primary');
+      } else {
+        link.classList.add('btn', 'btn-secondary');
       }
+
+      // Remove the original container (p > del > a or p > strong > a)
+      const wrapper = link.closest('p') || link.closest('.button-container');
+      if (wrapper && wrapper.parentElement === contentCell) {
+        wrapper.remove();
+      } else if (parent && (parent.tagName === 'DEL' || parent.tagName === 'STRONG')) {
+        parent.remove();
+      }
+
+      ctaContainer.appendChild(link);
+    });
+
+    // Group secondary buttons in a row
+    const primaryBtns = ctaContainer.querySelectorAll('.btn-primary');
+    const secondaryBtns = ctaContainer.querySelectorAll('.btn-secondary');
+
+    // Rebuild: primary first, then secondary in a row
+    ctaContainer.textContent = '';
+    primaryBtns.forEach((btn) => ctaContainer.appendChild(btn));
+
+    if (secondaryBtns.length > 0) {
+      const row2 = document.createElement('div');
+      row2.className = 'cta-row';
+      secondaryBtns.forEach((btn) => row2.appendChild(btn));
+      ctaContainer.appendChild(row2);
     }
 
     contentCell.appendChild(ctaContainer);

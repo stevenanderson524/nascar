@@ -1,68 +1,110 @@
-import { getConfig, getMetadata, loadStyle } from '../../scripts/ak.js';
+export default async function decorate(block) {
+  const rows = [...block.children];
+  
+  // Clear and rebuild
+  block.textContent = '';
 
-const FOOTER_PATH = '/drafts/footer.plain.html';
+  // Main content row
+  const mainRow = rows[0];
+  if (mainRow) {
+    const mainContent = document.createElement('div');
+    mainContent.className = 'footer-main';
 
-async function loadFooterFragment(path) {
-  const resp = await fetch(path);
-  if (!resp.ok) throw Error(`Could not fetch ${path}`);
+    // Phone CTA
+    const strong = mainRow.querySelector('strong');
+    const phoneLink = mainRow.querySelector('a[href^="tel:"]');
+    if (strong || phoneLink) {
+      const cta = document.createElement('div');
+      cta.className = 'footer-cta';
+      if (strong) {
+        const q = document.createElement('p');
+        q.className = 'footer-cta-title';
+        q.textContent = strong.textContent;
+        cta.appendChild(q);
+      }
+      if (phoneLink) {
+        const ph = document.createElement('a');
+        ph.href = phoneLink.href;
+        ph.className = 'footer-phone';
+        ph.textContent = phoneLink.textContent;
+        cta.appendChild(ph);
+      }
+      mainContent.appendChild(cta);
+    }
 
-  const html = await resp.text();
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-
-  // Support both full-page fragments (main > div) and plain.html (body > div)
-  let sections = doc.body.querySelectorAll('main > div');
-  if (!sections.length) {
-    sections = doc.body.querySelectorAll(':scope > div');
-  }
-
-  const fragment = document.createElement('div');
-  fragment.append(...sections);
-
-  return fragment;
-}
-
-/**
- * loads and decorates the footer
- * @param {Element} el The footer element
- */
-export default async function init(el) {
-  const { locale, codeBase } = getConfig();
-  await loadStyle(`${codeBase}/blocks/footer/footer.css`);
-
-  const footerMeta = getMetadata('footer');
-  let path = FOOTER_PATH;
-  if (footerMeta && footerMeta !== 'footer') {
-    path = footerMeta.endsWith('.plain.html') ? footerMeta : `${footerMeta}.plain.html`;
-  }
-
-  try {
-    const fragment = await loadFooterFragment(`${locale.prefix}${path}`);
-    fragment.classList.add('footer-content');
-
-    const sections = [...fragment.querySelectorAll(':scope > div')];
-
-    // Add section classes for styling
-    sections.forEach((section) => {
-      section.classList.add('section');
-      const wrapper = document.createElement('div');
-      wrapper.classList.add('default-content');
-      wrapper.append(...section.children);
-      section.append(wrapper);
+    // Accessibility text
+    const paragraphs = mainRow.querySelectorAll('p');
+    paragraphs.forEach((p) => {
+      if (p.textContent.includes('difficulty accessing') || p.textContent.includes('accessibility')) {
+        const acc = document.createElement('p');
+        acc.className = 'footer-accessibility';
+        acc.innerHTML = p.innerHTML;
+        mainContent.appendChild(acc);
+      }
     });
 
-    if (sections.length >= 1) {
-      const copyright = sections.pop();
-      copyright.classList.add('section-copyright');
+    // Logo
+    const logo = mainRow.querySelector('img');
+    if (logo) {
+      const logoDiv = document.createElement('div');
+      logoDiv.className = 'footer-logo';
+      const img = document.createElement('img');
+      img.src = logo.src;
+      img.alt = logo.alt || 'Watkins Glen International';
+      logoDiv.appendChild(img);
+      mainContent.appendChild(logoDiv);
     }
 
-    if (sections.length >= 1) {
-      const legal = sections.pop();
-      legal.classList.add('section-legal');
+    // Social links
+    const socialP = [...mainRow.querySelectorAll('p')].find(
+      (p) => p.textContent.includes('Facebook') || p.textContent.includes('Instagram')
+    );
+    if (socialP) {
+      const socDiv = document.createElement('div');
+      socDiv.className = 'footer-social';
+      const socialLinks = socialP.querySelectorAll('a');
+      socialLinks.forEach((link) => {
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = link.textContent.trim();
+        a.className = 'social-link';
+        socDiv.appendChild(a);
+      });
+      mainContent.appendChild(socDiv);
     }
 
-    el.append(fragment);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error('Footer loading error:', e);
+    block.appendChild(mainContent);
+  }
+
+  // Links row
+  const linksRow = rows[1];
+  if (linksRow) {
+    const linksDiv = document.createElement('div');
+    linksDiv.className = 'footer-links';
+    const links = linksRow.querySelectorAll('a');
+    links.forEach((link) => {
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.textContent = link.textContent.trim();
+      a.target = link.target || '';
+      linksDiv.appendChild(a);
+    });
+    block.appendChild(linksDiv);
+  }
+
+  // Copyright row
+  const copyRow = rows[2];
+  if (copyRow) {
+    const copyDiv = document.createElement('div');
+    copyDiv.className = 'footer-copyright';
+    const paragraphs = copyRow.querySelectorAll('p');
+    paragraphs.forEach((p) => {
+      const pp = document.createElement('p');
+      pp.textContent = p.textContent;
+      copyDiv.appendChild(pp);
+    });
+    block.appendChild(copyDiv);
   }
 }

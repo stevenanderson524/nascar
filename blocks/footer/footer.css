@@ -1,121 +1,123 @@
+/* Footer Block */
 footer {
-  background-color: var(--color-wgi-navy);
-  color: #fff;
-  padding: 32px 0;
-
-  a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: #fff;
-  }
-
-  .footer-content {
-    max-width: var(--grid-container-width);
-    margin: 0 auto;
-    font-size: 14px;
-    padding: 0 16px;
-  }
-
-  .section {
-    .default-content {
-      max-width: initial;
-      margin: initial;
-    }
-  }
-
-  img {
-    width: auto;
-  }
+  background: #1a1a2e;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--body-font-family, Figtree, sans-serif);
 }
 
-/* Contact/info section (first section) */
-footer .footer-content > .section:first-child .default-content {
+footer .footer-wrapper,
+footer .block-content:has(> .footer) {
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 50px 24px 30px;
   text-align: center;
+}
+
+/* Phone CTA */
+.footer .footer-cta {
   margin-bottom: 20px;
 }
 
-footer .footer-content > .section:first-child .default-content p {
-  margin: 4px 0;
-}
-
-footer .footer-content > .section:first-child .default-content p:first-child {
-  font-size: 16px;
+.footer .footer-cta-title {
+  font-size: 18px;
+  font-weight: 700;
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.05em;
   color: #fff;
-  margin-bottom: 2px;
+  margin: 0 0 4px;
 }
 
-footer .footer-content > .section:first-child .default-content p:first-child strong {
-  font-weight: 700;
+.footer .footer-phone {
+  color: var(--color-wgi-red, #da322a);
+  font-size: 22px;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
-/* Accessibility text  */
-footer .footer-content > .section:first-child .default-content p:nth-child(3) {
+.footer .footer-phone:hover {
+  text-decoration: underline;
+}
+
+/* Accessibility text */
+.footer .footer-accessibility {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.5;
-  margin-top: 12px;
+  color: rgba(255,255,255,0.5);
+  margin: 16px auto;
+  max-width: 600px;
+  line-height: 1.4;
 }
 
-/* Logo image sizing */
-footer .footer-content > .section:first-child .default-content picture img {
-  width: auto;
-  max-width: 180px;
-  max-height: 70px;
+.footer .footer-accessibility a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: underline;
+}
+
+/* Logo */
+.footer .footer-logo {
+  margin: 24px auto;
+}
+
+.footer .footer-logo img {
+  max-width: 200px;
   height: auto;
-  margin: 12px auto 4px;
+  opacity: 0.8;
 }
 
-/* Social links row */
-footer .footer-content > .section:first-child .default-content p:last-child a {
-  margin: 0 6px;
+/* Social links */
+.footer .footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+.footer .footer-social .social-link {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
   font-size: 13px;
+  font-weight: 500;
 }
 
-/* Legal section */
-footer .section-legal {
-  margin-bottom: 12px;
-  padding-top: 8px;
+.footer .footer-social .social-link:hover {
+  color: #fff;
 }
 
-footer .section-legal ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* Footer links */
+.footer .footer-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4px 20px;
+  gap: 8px 20px;
+  margin: 16px 0;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-footer .section-legal li {
-  margin: 0;
+.footer .footer-links a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
   font-size: 12px;
+  white-space: nowrap;
 }
 
-footer .section-legal a {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 12px;
-}
-
-footer .section-legal a:hover {
+.footer .footer-links a:hover {
   color: #fff;
 }
 
-/* Copyright section */
-footer .section-copyright .default-content {
-  text-align: center;
+/* Copyright */
+.footer .footer-copyright {
+  margin-top: 16px;
 }
 
-footer .section-copyright p {
-  margin: 2px 0;
-  color: rgba(255, 255, 255, 0.5);
+.footer .footer-copyright p {
   font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin: 4px 0;
 }
-
-

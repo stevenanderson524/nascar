@@ -4,6 +4,7 @@ export default async function decorate(block) {
   // Row 0: background image
   const bgRow = rows[0];
   const bgPic = bgRow?.querySelector('picture');
+  const bgImg = bgRow?.querySelector('img');
 
   // Row 1: heading
   const headingRow = rows[1];
@@ -13,11 +14,11 @@ export default async function decorate(block) {
   const subtitleRow = rows[2];
   const subtitle = subtitleRow?.querySelector('p');
 
-  // Row 3: field labels (First Name, Last Name, Email)
+  // Row 3: field labels
   const fieldsRow = rows[3];
   const fieldLabels = [...(fieldsRow?.children || [])].map(
     (cell) => cell.textContent.trim(),
-  );
+  ).filter(Boolean);
 
   // Row 4: button text
   const buttonRow = rows[4];
@@ -26,38 +27,43 @@ export default async function decorate(block) {
   // Clear block
   block.textContent = '';
 
-  // Background image layer
+  // Background
+  const bgDiv = document.createElement('div');
+  bgDiv.className = 'newsletter-bg';
   if (bgPic) {
-    const bgDiv = document.createElement('div');
-    bgDiv.className = 'newsletter-bg';
-    bgDiv.append(bgPic);
-    block.append(bgDiv);
+    bgDiv.appendChild(bgPic);
+  } else if (bgImg) {
+    bgDiv.appendChild(bgImg);
   }
+  block.appendChild(bgDiv);
 
-  // Overlay layer
+  // Overlay
   const overlay = document.createElement('div');
   overlay.className = 'newsletter-overlay';
-  block.append(overlay);
+  block.appendChild(overlay);
 
-  // Content wrapper
+  // Content wrapper (two columns)
   const content = document.createElement('div');
   content.className = 'newsletter-content';
 
-  // Header section
-  const header = document.createElement('div');
-  header.className = 'newsletter-header';
-  if (heading) header.append(heading);
-  if (subtitle) header.append(subtitle);
-  content.append(header);
+  // Left column: heading + subtitle
+  const left = document.createElement('div');
+  left.className = 'newsletter-header';
+  if (heading) left.appendChild(heading);
+  if (subtitle) {
+    subtitle.className = 'newsletter-subtitle';
+    left.appendChild(subtitle);
+  }
+  content.appendChild(left);
 
-  // Form section
+  // Right column: form
   const form = document.createElement('form');
   form.className = 'newsletter-form';
   form.addEventListener('submit', (e) => e.preventDefault());
 
   fieldLabels.forEach((label) => {
-    const fieldGroup = document.createElement('div');
-    fieldGroup.className = 'newsletter-field';
+    const group = document.createElement('div');
+    group.className = 'newsletter-field';
     const labelEl = document.createElement('label');
     labelEl.textContent = label;
     const input = document.createElement('input');
@@ -65,9 +71,9 @@ export default async function decorate(block) {
     input.placeholder = `*${label}`;
     input.name = label.toLowerCase().replace(/\s+/g, '_');
     input.required = true;
-    fieldGroup.append(labelEl);
-    fieldGroup.append(input);
-    form.append(fieldGroup);
+    group.appendChild(labelEl);
+    group.appendChild(input);
+    form.appendChild(group);
   });
 
   // Terms checkbox
@@ -79,22 +85,27 @@ export default async function decorate(block) {
   const termsLabel = document.createElement('label');
   termsLabel.htmlFor = 'newsletter-terms';
   termsLabel.textContent = '*By signing up, you agree to receive communications from Watkins Glen International in accordance with our Privacy Policy and Terms of Use.';
-  terms.append(checkbox);
-  terms.append(termsLabel);
-  form.append(terms);
+  terms.appendChild(checkbox);
+  terms.appendChild(termsLabel);
+  form.appendChild(terms);
 
   // Required note
-  const required = document.createElement('p');
-  required.className = 'newsletter-required';
-  required.textContent = '* Required';
-  form.append(required);
+  const req = document.createElement('p');
+  req.className = 'newsletter-required';
+  req.textContent = '* Required';
+  form.appendChild(req);
 
-  // Submit button
+  // Submit
   const btn = document.createElement('button');
   btn.type = 'submit';
+  btn.className = 'btn btn-primary';
   btn.textContent = buttonText;
-  form.append(btn);
+  form.appendChild(btn);
 
-  content.append(form);
-  block.append(content);
+  content.appendChild(form);
+  block.appendChild(content);
+
+  // Make parent section full-width
+  const section = block.closest('main > div') || block.parentElement;
+  if (section) section.classList.add('full-width');
 }

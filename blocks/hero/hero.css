@@ -1,121 +1,125 @@
-/* Hero block - full-width video-style hero with overlay text */
-.hero-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
-
+/* Hero block */
 .hero {
-  --hero-bg: var(--color-wgi-navy, #004174);
-  --hero-text: #fff;
-  --hero-min-height: 80vh;
-
   position: relative;
-  min-height: var(--hero-min-height);
-  background: var(--hero-bg);
-  color: var(--hero-text);
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
-/* Row 1: Background image */
-.hero > div:first-child {
+@media (min-width: 900px) {
+  .hero { height: 600px; }
+}
+
+/* Video / image background */
+.hero .hero-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
 
-.hero > div:first-child > div {
-  height: 100%;
-}
-
-.hero > div:first-child picture,
-.hero > div:first-child img {
-  display: block;
+.hero .hero-bg video,
+.hero .hero-bg img.hero-poster {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Dark overlay on top of image */
-.hero > div:first-child::after {
-  content: '';
+/* Dark overlay */
+.hero .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.35);
   z-index: 1;
 }
 
-/* Row 2: Text content */
-.hero > div:nth-child(2) {
+/* Content */
+.hero .hero-content {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 60px 40px 100px;
-  max-width: 900px;
-  margin: 0 auto;
+  color: #fff;
+  padding: 20px;
+  max-width: 800px;
 }
 
-.hero > div:nth-child(2) > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.hero h2 {
+.hero .hero-content h1,
+.hero .hero-content h2 {
+  font-family: var(--heading-font-family, Montserrat, Arial, sans-serif);
   font-size: clamp(36px, 6vw, 70px);
-  font-weight: 700;
-  line-height: 1;
+  font-weight: 900;
   text-transform: uppercase;
   color: #fff;
-  margin: 0;
-  letter-spacing: 0.02em;
+  margin: 0 0 12px;
+  line-height: 1.05;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
-.hero > div:nth-child(2) p {
-  font-size: clamp(16px, 2.5vw, 30px);
-  line-height: 1.2;
-  margin: 0;
+.hero .hero-subtitle {
+  font-size: clamp(14px, 1.5vw, 18px);
+  margin: 0 0 24px;
   color: #fff;
+  line-height: 1.5;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
-/* CTA buttons - using ak.js btn system */
-.hero .btn-group {
+/* CTA Buttons */
+.hero .hero-cta {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.hero a.btn {
-  padding: 10px 24px;
+.hero .hero-cta a.btn {
+  display: inline-block;
+  padding: 14px 32px;
   font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s;
+}
+
+.hero .hero-cta a.btn:hover {
+  opacity: 0.9;
+}
+
+.hero .hero-cta a.btn-primary {
+  background-color: var(--color-wgi-red, #da322a);
   color: #fff;
 }
 
-.hero a.btn-negative {
-  background: var(--color-wgi-red, #da322a);
-  border-color: var(--color-wgi-red, #da322a);
-}
-
-.hero a.btn-negative:hover {
-  background: #b12820;
-}
-
-.hero a.btn-primary {
-  background: var(--color-wgi-navy, #004174);
-  border-color: var(--color-wgi-navy, #004174);
+.hero .hero-cta a.btn-secondary {
+  background-color: var(--color-wgi-navy, #004174);
   color: #fff;
 }
 
-@media (width < 600px) {
-  .hero {
-    --hero-min-height: 50vh;
-  }
+/* Scroll arrow */
+.hero .hero-scroll-arrow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: bounce 2s ease-in-out infinite;
+  cursor: pointer;
+}
 
-  .hero > div:nth-child(2) {
-    padding: 40px 20px;
-  }
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* Remove any parent padding for hero section */
+.block-content:has(> .hero),
+main > div:has(> .hero),
+main > div:has(> .block-content:has(> .hero)) {
+  padding: 0 !important;
+  max-width: 100% !important;
+  margin: 0;
 }

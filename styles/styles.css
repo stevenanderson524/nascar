@@ -592,3 +592,118 @@ a.btn-secondary:hover {
   background-color: var(--color-wgi-navy);
   color: #fff;
 }
+
+/* === WGI Global Typography === */
+body {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  line-height: 1.15;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+/* Section headings - the big red ones between blocks */
+main > div > h2 {
+  color: var(--color-wgi-red);
+  font-size: clamp(28px, 4vw, 50px);
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+
+/* Section intro text */
+main > div > p {
+  text-align: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+
+main > div > p a {
+  color: var(--color-wgi-navy);
+  text-decoration: underline;
+}
+
+/* === WGI Button System === */
+a.btn,
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+a.btn:hover, .btn:hover { opacity: 0.9; }
+
+a.btn-primary, .btn-primary {
+  background-color: var(--color-wgi-red);
+  color: var(--color-wgi-white);
+}
+
+a.btn-secondary, .btn-secondary {
+  background-color: var(--color-wgi-navy);
+  color: var(--color-wgi-white);
+}
+
+/* === Section spacing === */
+main > div {
+  padding: 30px var(--grid-gutter-width) 40px;
+}
+
+main > div:first-child {
+  padding-top: 0;
+}
+
+/* Dark section variant (used by hospitality) */
+main > div.dark-section {
+  background-color: var(--color-wgi-dark-navy);
+  color: var(--color-wgi-white);
+}
+
+main > div.dark-section h2 {
+  color: var(--color-wgi-red);
+}
+
+/* Full-width sections (hero, newsletter) */
+main > div.full-width {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 100%;
+}
+
+/* === Image defaults === */
+main img {
+  max-width: 100%;
+  height: auto;
+}
+
+main picture {
+  display: block;
+}
+
+main picture img {
+  display: block;
+  width: 100%;
+}

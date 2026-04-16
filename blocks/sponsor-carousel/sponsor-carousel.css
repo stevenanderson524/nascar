@@ -1,146 +1,96 @@
 /* Sponsor Carousel Block */
-.sponsor-carousel-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
+.block-content:has(> .sponsor-carousel),
+main > div:has(> .sponsor-carousel) {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
 .sponsor-carousel {
-  --carousel-bg: #fff;
-  --carousel-border: #e2e2e2;
-  --carousel-radius: 10px;
-  --carousel-card-height: 182px;
-  --carousel-font: 'Figtree', sans-serif;
-  --carousel-label-size: 10px;
-  --carousel-gap: 20px;
-  --carousel-arrow-size: 40px;
-
-  position: relative;
-  background: var(--carousel-bg);
-  padding: 20px 0;
-  overflow: hidden;
+  text-align: center;
 }
 
-/* Header row (Ticketmaster logo) */
+/* Header (Ticketmaster logo) */
 .sponsor-carousel .sponsor-header {
-  text-align: center;
-  padding: 0 0 20px;
+  margin-bottom: 24px;
 }
 
 .sponsor-carousel .sponsor-header img {
-  width: 220px;
+  max-width: 220px;
   height: auto;
   display: inline-block;
 }
 
-/* Carousel track container */
-.sponsor-carousel .carousel-viewport {
-  overflow: hidden;
-  margin: 0 60px;
+/* Carousel container */
+.sponsor-carousel .carousel-container {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+/* Arrow buttons */
+.sponsor-carousel .carousel-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: border-color 0.2s, color 0.2s;
+  padding: 0;
+}
+
+.sponsor-carousel .carousel-arrow:hover {
+  border-color: var(--color-wgi-navy, #004174);
+  color: var(--color-wgi-navy, #004174);
+}
+
+/* Viewport */
+.sponsor-carousel .carousel-viewport {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Track */
 .sponsor-carousel .carousel-track {
   display: flex;
-  gap: var(--carousel-gap);
+  gap: 20px;
   transition: transform 0.4s ease;
 }
 
 /* Sponsor card */
 .sponsor-carousel .sponsor-card {
-  flex: 0 0 calc((100% - var(--carousel-gap) * 4) / 5);
-  min-width: 180px;
-  border: 1px solid var(--carousel-border);
-  border-radius: var(--carousel-radius);
+  flex-shrink: 0;
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: var(--carousel-card-height);
-  position: relative;
   text-decoration: none;
-  color: #000;
-  box-sizing: border-box;
-  padding: 15px;
+  padding: 16px;
+  min-height: 120px;
 }
 
 .sponsor-carousel .sponsor-card img {
-  width: 90%;
-  height: auto;
-  max-height: 120px;
+  max-width: 100%;
+  max-height: 100px;
   object-fit: contain;
+  display: block;
 }
 
 .sponsor-carousel .sponsor-card .sponsor-name {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: 100%;
+  font-size: 11px;
+  color: #666;
+  margin-top: 8px;
   text-align: center;
-  font-family: var(--carousel-font);
-  font-weight: 700;
-  font-size: var(--carousel-label-size);
-  color: #000;
-  margin: 0;
-}
-
-/* Reset EDS button styling for sponsor links */
-main .sponsor-carousel .button-container { display: none; }
-main .sponsor-carousel a.button:any-link {
-  background: none;
-  border: none;
-  color: #000;
-  font-size: var(--carousel-label-size);
-  font-weight: 700;
-  padding: 0;
-  margin: 0;
-  text-decoration: none;
-  white-space: normal;
-}
-
-/* Navigation arrows */
-.sponsor-carousel .carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-20%);
-  z-index: 2;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  width: var(--carousel-arrow-size);
-  height: var(--carousel-arrow-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  color: #999;
-  padding: 0;
-}
-
-.sponsor-carousel .carousel-arrow:hover {
-  color: #333;
-}
-
-.sponsor-carousel .carousel-arrow.prev {
-  left: 10px;
-}
-
-.sponsor-carousel .carousel-arrow.next {
-  right: 10px;
-}
-
-/* Responsive */
-@media (width < 900px) {
-  .sponsor-carousel .sponsor-card {
-    flex: 0 0 calc((100% - var(--carousel-gap) * 2) / 3);
-  }
-}
-
-@media (width < 600px) {
-  .sponsor-carousel .sponsor-card {
-    flex: 0 0 calc((100% - var(--carousel-gap)) / 2);
-  }
-
-  .sponsor-carousel .carousel-viewport {
-    margin: 0 40px;
-  }
+  line-height: 1.2;
 }

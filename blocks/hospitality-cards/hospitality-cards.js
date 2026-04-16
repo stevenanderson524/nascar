@@ -4,11 +4,11 @@ export default async function decorate(block) {
 
   // First row is the heading row
   const headingRow = rows[0];
-  headingRow.classList.add('hospitality-cards-heading');
+  headingRow.classList.add('hospitality-heading');
 
-  // Remaining rows are card rows — restructure each into a card
-  const cardContainer = document.createElement('div');
-  cardContainer.classList.add('hospitality-cards-grid');
+  // Remaining rows are card rows — build a grid
+  const grid = document.createElement('div');
+  grid.classList.add('hospitality-grid');
 
   rows.slice(1).forEach((row) => {
     const cells = [...row.children];
@@ -27,13 +27,31 @@ export default async function decorate(block) {
     if (cells[1]) {
       const content = document.createElement('div');
       content.classList.add('hospitality-card-content');
-      content.innerHTML = cells[1].innerHTML;
+      
+      // Move all children
+      while (cells[1].firstChild) {
+        content.appendChild(cells[1].firstChild);
+      }
+      
+      // Style the CTA link
+      const links = content.querySelectorAll('a');
+      links.forEach((link) => {
+        link.classList.remove('button');
+        link.classList.add('btn', 'btn-primary');
+      });
+      
       card.appendChild(content);
     }
 
-    cardContainer.appendChild(card);
+    grid.appendChild(card);
     row.remove();
   });
 
-  block.appendChild(cardContainer);
+  block.appendChild(grid);
+  
+  // Add section-level dark class to parent
+  const section = block.closest('.section') || block.closest('main > div') || block.parentElement;
+  if (section) {
+    section.classList.add('dark-section');
+  }
 }

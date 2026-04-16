@@ -2,14 +2,14 @@ export default async function decorate(block) {
   const rows = [...block.children];
   if (rows.length < 2) return;
 
-  // First row is the header (Ticketmaster logo)
+  // First row = header (Ticketmaster logo)
   const headerRow = rows[0];
   const headerImg = headerRow.querySelector('img');
 
-  // Remaining rows are sponsor cards
+  // Remaining rows = sponsors
   const sponsorRows = rows.slice(1);
 
-  // Build the new structure
+  // Build header
   const header = document.createElement('div');
   header.className = 'sponsor-header';
   if (headerImg) {
@@ -70,32 +70,36 @@ export default async function decorate(block) {
   nextBtn.setAttribute('aria-label', 'Next sponsors');
   nextBtn.innerHTML = '&#8250;';
 
-  // Clear block and add new structure
+  // Clear and rebuild
   block.textContent = '';
   block.appendChild(header);
-  block.appendChild(prevBtn);
-  block.appendChild(viewport);
-  block.appendChild(nextBtn);
+
+  const carouselWrap = document.createElement('div');
+  carouselWrap.className = 'carousel-container';
+  carouselWrap.appendChild(prevBtn);
+  carouselWrap.appendChild(viewport);
+  carouselWrap.appendChild(nextBtn);
+  block.appendChild(carouselWrap);
 
   // Carousel logic
   let offset = 0;
+
+  const getCardWidth = () => {
+    const card = track.querySelector('.sponsor-card');
+    if (!card) return 260;
+    return card.offsetWidth + 20; // card width + gap
+  };
+
   const getVisibleCount = () => {
     const vw = viewport.offsetWidth;
-    const cards = track.querySelectorAll('.sponsor-card');
-    if (!cards.length) return 1;
-    const cardWidth = cards[0].offsetWidth;
-    const gap = 20;
-    return Math.floor((vw + gap) / (cardWidth + gap));
+    return Math.floor(vw / getCardWidth()) || 1;
   };
 
   const totalCards = track.querySelectorAll('.sponsor-card').length;
 
   const updateTrack = () => {
-    const cards = track.querySelectorAll('.sponsor-card');
-    if (!cards.length) return;
-    const cardWidth = cards[0].offsetWidth;
-    const gap = 20;
-    track.style.transform = `translateX(-${offset * (cardWidth + gap)}px)`;
+    track.style.transform = `translateX(-${offset * getCardWidth()}px)`;
+    track.style.transition = 'transform 0.4s ease';
   };
 
   prevBtn.addEventListener('click', () => {

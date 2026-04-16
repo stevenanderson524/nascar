@@ -1,122 +1,127 @@
+/* Callouts Block */
 .callouts {
-  --callout-bg: #fff;
-  --callout-text: #000;
-  --callout-radius: 10px;
-  --callout-shadow: 3px 4px 12px 0 rgba(0, 0, 0, 0.2);
-  --callout-padding: 20px;
-  --callout-gap: 20px;
-  --callout-header-size: 24px;
-  --callout-subheader-size: 14px;
-  --callout-text-header-size: 23px;
-  --callout-body-size: 16px;
-
   max-width: var(--grid-container-width, 83.4%);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--callout-gap);
+  gap: 24px;
 }
 
-/* Each row is one callout card */
+/* Each callout card (row) */
 .callouts > div {
-  background: var(--callout-bg);
-  border-radius: var(--callout-radius);
-  box-shadow: var(--callout-shadow);
-  padding: var(--callout-padding);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 3px 4px 12px 0 rgba(0, 0, 0, 0.15);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
-/* Each cell */
-.callouts > div > div {
-  flex: 1;
-  min-width: 0;
+@media (min-width: 900px) {
+  .callouts > div {
+    flex-direction: row;
+    align-items: stretch;
+  }
 }
 
 /* Text cell */
-.callouts > div > div:not(.callout-image) h3 {
-  font-size: var(--callout-header-size);
+.callouts .callout-text {
+  flex: 1;
+  padding: 30px 33px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.callouts .callout-text h3 {
+  font-family: var(--heading-font-family, Montserrat, sans-serif);
+  font-size: 24px;
   font-weight: 900;
   text-transform: uppercase;
   margin: 0 0 4px;
-  color: var(--callout-text);
+  color: #111;
 }
 
-.callouts > div > div em {
+.callouts .callout-text em {
   font-style: normal;
-  font-size: var(--callout-subheader-size);
+  font-size: 14px;
   font-weight: 400;
   display: block;
   margin-bottom: 8px;
+  color: #555;
 }
 
-.callouts > div > div h4 {
-  font-size: var(--callout-text-header-size);
-  font-weight: 400;
+.callouts .callout-text h4 {
+  font-size: 20px;
+  font-weight: 700;
   text-transform: uppercase;
   margin: 0 0 12px;
-  color: var(--callout-text);
+  color: #111;
 }
 
-.callouts > div > div p {
-  font-size: var(--callout-body-size);
-  line-height: 1.5;
+.callouts .callout-text p {
+  font-size: 14px;
+  line-height: 1.6;
   margin: 0 0 8px;
+  color: #333;
 }
 
-.callouts > div > div ul {
-  font-size: var(--callout-body-size);
-  margin: 0 0 12px;
+.callouts .callout-text ul {
+  font-size: 14px;
+  margin: 0 0 16px;
   padding-left: 20px;
+  color: #333;
 }
 
-.callouts > div > div ul li {
+.callouts .callout-text ul li {
   margin-block: 4px;
+}
+
+.callouts .callout-text a.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  line-height: 1;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.callouts .callout-text a.btn-primary {
+  background-color: var(--color-wgi-red, #da322a);
+  color: #fff;
+}
+
+.callouts .callout-text a.btn-secondary {
+  background-color: var(--color-wgi-navy, #004174);
+  color: #fff;
 }
 
 /* Image cell */
 .callouts .callout-image {
-  border-radius: var(--callout-radius);
   overflow: hidden;
 }
 
-.callouts .callout-image img,
-.callouts .callout-image picture {
+.callouts .callout-image picture,
+.callouts .callout-image img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* CTA buttons - override project btn padding for wider callout buttons */
-.callouts a.btn {
-  padding: 9px 30px;
-}
-
-.callouts a.btn-primary {
-  padding: 10px 30px;
-}
-
-/* Desktop layout */
-@media (width >= 900px) {
-  .callouts > div {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  /* Text cell padding - adjusts based on position */
-  .callouts > div > div:not(.callout-image) {
-    padding: 20px 0 10px 33px;
-  }
-
-  /* When image is first (text on right), padding switches */
-  .callouts > div > .callout-image:first-child ~ div {
-    padding: 20px 33px 10px 0;
-  }
-
-  /* Image cell fixed aspect */
+@media (min-width: 900px) {
   .callouts .callout-image {
     flex: 0 0 46%;
     max-width: 600px;
+    min-height: 280px;
   }
 }
+
+/* Override EDS button defaults */
+main .callouts .button-container { display: contents; }
+main .callouts a.button:any-link { all: unset; cursor: pointer; }
