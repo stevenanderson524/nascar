@@ -388,3 +388,80 @@ aem-sidekick {
     opacity: 1;
   }
 }
+
+/* =============================================
+   Watkins Glen International - Brand Overrides
+   ============================================= */
+:root {
+  --color-wgi-navy: #002D62;
+  --color-wgi-red: #CC0000;
+  --color-wgi-light-blue: #004C99;
+  --color-brand: var(--color-wgi-navy);
+  --color-accent: var(--color-wgi-red);
+}
+
+/* WGI uppercase bold headings */
+h1, h2, h3 {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* WGI button overrides */
+a.btn-negative {
+  background-color: var(--color-wgi-red);
+  border-color: var(--color-wgi-red);
+}
+
+a.btn-primary {
+  background-color: var(--color-wgi-navy);
+  border-color: var(--color-wgi-navy);
+  color: #fff;
+}
+
+a.btn-primary.btn-outline {
+  color: var(--color-wgi-navy);
+  background: transparent;
+}
+
+/* Secondary nav bar section */
+.section.secondary-nav {
+  padding: 10px 0;
+}
+
+.section.secondary-nav a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: var(--body-font-size-s);
+  letter-spacing: 0.05em;
+  margin: 0 16px;
+}
+
+.section.secondary-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Dark scheme card overrides for hospitality section */
+.dark-scheme .card {
+  background: linear-gradient(180deg, var(--color-wgi-light-blue) 0%, var(--color-wgi-navy) 100%);
+  color: #fff;
+}
+
+.dark-scheme .card .card-cta-container a.btn {
+  color: #fff;
+  border-color: #fff;
+}
+
+/* Sponsor logos section */
+.section.sponsors img {
+  max-height: 60px;
+  width: auto;
+  margin: 0 20px;
+  vertical-align: middle;
+}
+
+.section.sponsors .ticketmaster-logo img {
+  max-height: 40px;
+}
