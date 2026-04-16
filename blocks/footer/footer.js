@@ -1,18 +1,32 @@
 export default async function decorate(block) {
-  const rows = [...block.children];
-  
-  // Clear and rebuild
+  // Fetch footer content
+  const footerPath = '/drafts/footer';
+  let resp = await fetch(`${footerPath}.plain.html`);
+  if (!resp.ok) {
+    resp = await fetch('/footer.plain.html');
+  }
+  if (!resp.ok) return;
+
+  const html = await resp.text();
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+
+  const sections = [...temp.children];
+  const mainSection = sections[0];
+  const linksSection = sections[1];
+  const copySection = sections[2];
+
+  // Clear block
   block.textContent = '';
 
-  // Main content row
-  const mainRow = rows[0];
-  if (mainRow) {
-    const mainContent = document.createElement('div');
-    mainContent.className = 'footer-main';
+  // === Main content ===
+  if (mainSection) {
+    const mainDiv = document.createElement('div');
+    mainDiv.className = 'footer-main';
 
     // Phone CTA
-    const strong = mainRow.querySelector('strong');
-    const phoneLink = mainRow.querySelector('a[href^="tel:"]');
+    const strong = mainSection.querySelector('strong');
+    const phoneLink = mainSection.querySelector('a[href^="tel:"]');
     if (strong || phoneLink) {
       const cta = document.createElement('div');
       cta.className = 'footer-cta';
@@ -29,34 +43,35 @@ export default async function decorate(block) {
         ph.textContent = phoneLink.textContent;
         cta.appendChild(ph);
       }
-      mainContent.appendChild(cta);
+      mainDiv.appendChild(cta);
     }
 
     // Accessibility text
-    const paragraphs = mainRow.querySelectorAll('p');
+    const paragraphs = mainSection.querySelectorAll('p');
     paragraphs.forEach((p) => {
       if (p.textContent.includes('difficulty accessing') || p.textContent.includes('accessibility')) {
         const acc = document.createElement('p');
         acc.className = 'footer-accessibility';
         acc.innerHTML = p.innerHTML;
-        mainContent.appendChild(acc);
+        mainDiv.appendChild(acc);
       }
     });
 
     // Logo
-    const logo = mainRow.querySelector('img');
-    if (logo) {
+    const logo = mainSection.querySelector('picture img, img');
+    if (logo && !logo.closest('a[href^="tel:"]')) {
       const logoDiv = document.createElement('div');
       logoDiv.className = 'footer-logo';
       const img = document.createElement('img');
       img.src = logo.src;
       img.alt = logo.alt || 'Watkins Glen International';
+      img.loading = 'lazy';
       logoDiv.appendChild(img);
-      mainContent.appendChild(logoDiv);
+      mainDiv.appendChild(logoDiv);
     }
 
     // Social links
-    const socialP = [...mainRow.querySelectorAll('p')].find(
+    const socialP = [...mainSection.querySelectorAll('p')].find(
       (p) => p.textContent.includes('Facebook') || p.textContent.includes('Instagram')
     );
     if (socialP) {
@@ -72,34 +87,32 @@ export default async function decorate(block) {
         a.className = 'social-link';
         socDiv.appendChild(a);
       });
-      mainContent.appendChild(socDiv);
+      mainDiv.appendChild(socDiv);
     }
 
-    block.appendChild(mainContent);
+    block.appendChild(mainDiv);
   }
 
-  // Links row
-  const linksRow = rows[1];
-  if (linksRow) {
+  // === Links ===
+  if (linksSection) {
     const linksDiv = document.createElement('div');
     linksDiv.className = 'footer-links';
-    const links = linksRow.querySelectorAll('a');
+    const links = linksSection.querySelectorAll('a');
     links.forEach((link) => {
       const a = document.createElement('a');
       a.href = link.href;
       a.textContent = link.textContent.trim();
-      a.target = link.target || '';
+      if (link.target) a.target = link.target;
       linksDiv.appendChild(a);
     });
     block.appendChild(linksDiv);
   }
 
-  // Copyright row
-  const copyRow = rows[2];
-  if (copyRow) {
+  // === Copyright ===
+  if (copySection) {
     const copyDiv = document.createElement('div');
     copyDiv.className = 'footer-copyright';
-    const paragraphs = copyRow.querySelectorAll('p');
+    const paragraphs = copySection.querySelectorAll('p');
     paragraphs.forEach((p) => {
       const pp = document.createElement('p');
       pp.textContent = p.textContent;

@@ -739,3 +739,23 @@ main picture img {
 
 /* Fix block-content wrapper to remove excess padding on first section */
 .block-content { max-width: 100%; }
+
+/* Widen block sections to match source site (1300px container) */
+.section:has(.ticket-cards) > .default-content,
+.section:has(.experience-cards) > .default-content,
+.section:has(.callouts) > .default-content,
+.section:has(.sponsor-carousel) > .default-content {
+  max-width: 1300px;
+}
+
+/* Section containing the block itself also needs full width */
+.section:has(.ticket-cards),
+.section:has(.experience-cards),
+.section:has(.callouts),
+.section:has(.sponsor-carousel),
+.section:has(.newsletter),
+.section:has(.hero),
+.section:has(.hospitality-cards),
+.section:has(.event-bar) {
+  max-width: 100%;
+}

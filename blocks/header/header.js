@@ -1,37 +1,48 @@
 export default async function decorate(block) {
-  // Header already has nav content loaded by EDS framework
-  // The block receives the nav document's sections as rows
-  const rows = [...block.children];
+  // Fetch nav content — try /drafts/nav first (for drafts pages), then /nav
+  const navPath = '/drafts/nav';
+  let resp = await fetch(`${navPath}.plain.html`);
+  if (!resp.ok) {
+    resp = await fetch('/nav.plain.html');
+  }
+  if (!resp.ok) return;
 
-  // Row 0: Logo
-  const logoRow = rows[0];
-  // Row 1: Main nav
-  const mainNavRow = rows[1];
-  // Row 2: Utility links
-  const utilRow = rows[2];
-  // Row 3: Secondary nav
-  const secNavRow = rows[3];
+  const html = await resp.text();
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
 
-  // Clear and rebuild
+  // Parse sections (each <div> is a section)
+  const sections = [...temp.children];
+  const logoSection = sections[0];
+  const mainNavSection = sections[1];
+  const utilSection = sections[2];
+  const secNavSection = sections[3];
+
+  // Clear block
   block.textContent = '';
 
-  // === Top bar (main header) ===
+  // === Top bar ===
   const topBar = document.createElement('div');
   topBar.className = 'header-top';
 
   // Logo
   const logoDiv = document.createElement('div');
   logoDiv.className = 'header-logo';
-  if (logoRow) {
-    const logoLink = logoRow.querySelector('a');
-    const logoImg = logoRow.querySelector('img');
-    if (logoLink && logoImg) {
+  if (logoSection) {
+    const logoLink = logoSection.querySelector('a');
+    const logoImg = logoSection.querySelector('img');
+    if (logoLink) {
       const a = document.createElement('a');
-      a.href = logoLink.href;
-      const img = document.createElement('img');
-      img.src = logoImg.src;
-      img.alt = logoImg.alt || 'Watkins Glen International';
-      a.appendChild(img);
+      a.href = logoLink.href || '/';
+      if (logoImg) {
+        const img = document.createElement('img');
+        img.src = logoImg.src;
+        img.alt = logoImg.alt || 'Watkins Glen International';
+        img.loading = 'eager';
+        a.appendChild(img);
+      } else {
+        a.textContent = 'Watkins Glen International';
+      }
       logoDiv.appendChild(a);
     }
   }
@@ -40,8 +51,8 @@ export default async function decorate(block) {
   // Main nav
   const mainNav = document.createElement('nav');
   mainNav.className = 'header-nav';
-  if (mainNavRow) {
-    const links = mainNavRow.querySelectorAll('a');
+  if (mainNavSection) {
+    const links = mainNavSection.querySelectorAll('a');
     links.forEach((link) => {
       const a = document.createElement('a');
       a.href = link.href;
@@ -51,11 +62,11 @@ export default async function decorate(block) {
   }
   topBar.appendChild(mainNav);
 
-  // Right side: utility links
+  // Utility links (right side)
   const utilDiv = document.createElement('div');
   utilDiv.className = 'header-util';
-  if (utilRow) {
-    const links = utilRow.querySelectorAll('a');
+  if (utilSection) {
+    const links = utilSection.querySelectorAll('a');
     links.forEach((link) => {
       const a = document.createElement('a');
       a.href = link.href;
@@ -66,7 +77,7 @@ export default async function decorate(block) {
   }
   topBar.appendChild(utilDiv);
 
-  // Hamburger (mobile)
+  // Hamburger button (mobile)
   const hamburger = document.createElement('button');
   hamburger.className = 'header-hamburger';
   hamburger.setAttribute('aria-label', 'Toggle menu');
@@ -79,12 +90,12 @@ export default async function decorate(block) {
   block.appendChild(topBar);
 
   // === Secondary nav bar ===
-  if (secNavRow) {
+  if (secNavSection) {
     const secBar = document.createElement('div');
     secBar.className = 'header-secondary';
     const secNav = document.createElement('nav');
     secNav.className = 'secondary-nav';
-    const links = secNavRow.querySelectorAll('a');
+    const links = secNavSection.querySelectorAll('a');
     links.forEach((link) => {
       const a = document.createElement('a');
       a.href = link.href;
