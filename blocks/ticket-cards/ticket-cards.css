@@ -110,12 +110,12 @@ main > div:has(> .ticket-cards) {
   line-height: 1;
 }
 
-.ticket-cards .ticket-cards-cta a.btn-primary {
+.ticket-cards .ticket-cards-cta a.cta-buy {
   background-color: var(--color-wgi-red, #da322a);
   color: #fff;
 }
 
-.ticket-cards .ticket-cards-cta a.btn-secondary {
+.ticket-cards .ticket-cards-cta a.cta-secondary {
   background-color: var(--color-wgi-navy, #004174);
   color: #fff;
 }

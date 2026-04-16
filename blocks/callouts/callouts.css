@@ -91,12 +91,12 @@
   align-self: flex-start;
 }
 
-.callouts .callout-text a.btn-primary {
+.callouts .callout-text a.cta-buy {
   background-color: var(--color-wgi-red, #da322a);
   color: #fff;
 }
 
-.callouts .callout-text a.btn-secondary {
+.callouts .callout-text a.cta-secondary {
   background-color: var(--color-wgi-navy, #004174);
   color: #fff;
 }

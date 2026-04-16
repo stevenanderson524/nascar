@@ -5,38 +5,31 @@ export default function decorate(block) {
     const cells = [...row.children];
 
     cells.forEach((cell) => {
-      // Identify image cells: contain picture/img but no headings
       const pic = cell.querySelector('picture, img');
       const heading = cell.querySelector('h1, h2, h3, h4, h5, h6');
 
       if (pic && !heading) {
         cell.classList.add('callout-image');
-      } else {
+      } else if (heading || cell.querySelector('p')) {
         cell.classList.add('callout-text');
 
-        // Process CTA buttons within text cell
+        // Process CTA buttons - detect ak.js classes
         const links = [...cell.querySelectorAll('a')];
         links.forEach((link) => {
-          const parent = link.parentElement;
-          const isDel = parent && parent.tagName === 'DEL';
-          const isStrong = parent && parent.tagName === 'STRONG';
+          const isNegative = link.classList.contains('btn-negative');
+          link.classList.remove('button', 'btn-negative', 'btn-primary', 'btn-secondary', 'accent');
 
-          link.classList.remove('button', 'primary', 'secondary');
-
-          if (isDel) {
-            link.classList.add('btn', 'btn-primary');
-            // Unwrap from del
-            if (parent.parentElement) {
-              parent.parentElement.replaceChild(link, parent);
-            }
-          } else if (isStrong) {
-            link.classList.add('btn', 'btn-secondary');
-            // Unwrap from strong
-            if (parent.parentElement) {
-              parent.parentElement.replaceChild(link, parent);
-            }
+          if (isNegative) {
+            link.classList.add('btn', 'cta-buy');
           } else {
-            link.classList.add('btn', 'btn-secondary');
+            link.classList.add('btn', 'cta-secondary');
+          }
+
+          // Unwrap from container paragraph if needed
+          const wrapper = link.closest('p');
+          if (wrapper && cell.contains(wrapper) && wrapper.querySelectorAll('a').length === 1) {
+            wrapper.before(link);
+            wrapper.remove();
           }
         });
       }

@@ -8,55 +8,51 @@ export default async function decorate(block) {
     const imageCell = cells[0];
     const contentCell = cells[1];
 
-    // Style image cell
     imageCell.classList.add('ticket-cards-image');
-
-    // Build content structure
     contentCell.classList.add('ticket-cards-content');
 
-    // Process CTAs - find all links and categorize them
+    // Process CTAs — ak.js already converts <del><a> to a.btn-negative
+    // and <strong><a> to a.btn-primary. We remap these to our system.
     const allLinks = [...contentCell.querySelectorAll('a')];
     const ctaContainer = document.createElement('div');
     ctaContainer.classList.add('ticket-cards-cta');
 
     allLinks.forEach((link) => {
-      const parent = link.parentElement;
+      // Detect the ak.js-applied classes
+      const isNegative = link.classList.contains('btn-negative'); // was <del> = red CTA
+      const isPrimary = link.classList.contains('btn-primary'); // was <strong> = secondary CTA
 
-      // Determine button type
-      const isDel = parent && parent.tagName === 'DEL';
+      // Remove all ak.js classes
+      link.classList.remove('button', 'btn-negative', 'btn-primary', 'btn-secondary', 'accent');
 
-      // Remove EDS button classes
-      link.classList.remove('button', 'primary', 'secondary');
-
-      if (isDel) {
-        link.classList.add('btn', 'btn-primary');
+      // Apply our classes: negative (del) = red, everything else = navy
+      if (isNegative) {
+        link.classList.add('btn', 'cta-buy');
       } else {
-        link.classList.add('btn', 'btn-secondary');
+        link.classList.add('btn', 'cta-secondary');
       }
 
-      // Remove the original container (p > del > a or p > strong > a)
+      // Remove the button wrapper paragraph
       const wrapper = link.closest('p') || link.closest('.button-container');
-      if (wrapper && wrapper.parentElement === contentCell) {
-        wrapper.remove();
-      } else if (parent && (parent.tagName === 'DEL' || parent.tagName === 'STRONG')) {
-        parent.remove();
+      if (wrapper && contentCell.contains(wrapper)) {
+        wrapper.before(link);
+        if (!wrapper.querySelector('a')) wrapper.remove();
       }
 
       ctaContainer.appendChild(link);
     });
 
-    // Group secondary buttons in a row
-    const primaryBtns = ctaContainer.querySelectorAll('.btn-primary');
-    const secondaryBtns = ctaContainer.querySelectorAll('.btn-secondary');
+    // Separate: buy button on top, secondaries in a row below
+    const buyBtns = ctaContainer.querySelectorAll('.cta-buy');
+    const secBtns = ctaContainer.querySelectorAll('.cta-secondary');
 
-    // Rebuild: primary first, then secondary in a row
     ctaContainer.textContent = '';
-    primaryBtns.forEach((btn) => ctaContainer.appendChild(btn));
+    buyBtns.forEach((b) => ctaContainer.appendChild(b));
 
-    if (secondaryBtns.length > 0) {
+    if (secBtns.length > 0) {
       const row2 = document.createElement('div');
       row2.className = 'cta-row';
-      secondaryBtns.forEach((btn) => row2.appendChild(btn));
+      secBtns.forEach((b) => row2.appendChild(b));
       ctaContainer.appendChild(row2);
     }
 
