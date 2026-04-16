@@ -86,23 +86,35 @@
 
 /* WGI Card overrides */
 
-/* Badge/tag styling for first strong text in card content */
-.card .card-content-container > p:first-child {
+/* Card background fix for light mode */
+.card {
+  background-color: #f1f1f1;
+  color: #000;
+}
+
+/* Badge/tag styling for first text in card content (like "FULL WEEKEND") */
+.card:not(.quiet) .card-content-container > p:first-child {
   font-size: var(--body-font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--color-wgi-red);
+  margin-bottom: 4px;
+}
+
+/* Card title (second strong text) */
+.card:not(.quiet) .card-content-container > p:nth-child(2) {
+  font-size: var(--body-font-size-l);
+  font-weight: 800;
+  text-transform: uppercase;
   color: var(--color-wgi-navy);
+  margin-bottom: 8px;
 }
 
 /* Quick links icon tiles */
-.card.quiet.center img {
-  max-width: 64px;
-  margin: 0 auto;
-}
-
 .card.quiet.center .card-content-container {
   text-align: center;
+  padding: 8px;
 }
 
 .card.quiet.center .card-content-container p {
@@ -110,6 +122,7 @@
   text-transform: uppercase;
   font-size: var(--body-font-size-s);
   letter-spacing: 0.03em;
+  color: var(--color-wgi-navy);
 }
 
 /* Multiple CTA buttons in card */

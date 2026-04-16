@@ -68,8 +68,8 @@
   --spacing-s: 8px;
   --spacing-xs: 4px;
 
-  /* color schemes */
-  color-scheme: light dark;
+  /* color schemes - force light for WGI */
+  color-scheme: light;
 
   /* color tokens */
   --color-gray-100: #f1f1f1;
@@ -400,17 +400,25 @@ aem-sidekick {
   --color-accent: var(--color-wgi-red);
 }
 
+/* Force light mode for all color calculations */
+body {
+  background-color: #fff;
+  color: #000;
+}
+
 /* WGI uppercase bold headings */
 h1, h2, h3 {
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.02em;
+  color: var(--color-wgi-navy);
 }
 
 /* WGI button overrides */
 a.btn-negative {
   background-color: var(--color-wgi-red);
   border-color: var(--color-wgi-red);
+  color: #fff;
 }
 
 a.btn-primary {
@@ -424,9 +432,28 @@ a.btn-primary.btn-outline {
   background: transparent;
 }
 
+a.btn-secondary {
+  background-color: #fff;
+  border-color: var(--color-wgi-navy);
+  color: var(--color-wgi-navy);
+}
+
+/* Link color */
+a {
+  color: var(--color-wgi-navy);
+}
+
 /* Secondary nav bar section */
 .section.secondary-nav {
-  padding: 10px 0;
+  padding: 12px 0;
+}
+
+.section.secondary-nav .default-content p {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
 }
 
 .section.secondary-nav a {
@@ -436,16 +463,27 @@ a.btn-primary.btn-outline {
   font-weight: 600;
   font-size: var(--body-font-size-s);
   letter-spacing: 0.05em;
-  margin: 0 16px;
 }
 
 .section.secondary-nav a:hover {
   text-decoration: underline;
 }
 
-/* Dark scheme card overrides for hospitality section */
+/* Dark-scheme card overrides for hospitality section */
 .dark-scheme .card {
   background: linear-gradient(180deg, var(--color-wgi-light-blue) 0%, var(--color-wgi-navy) 100%);
+  color: #fff;
+}
+
+.dark-scheme .card .card-content-container {
+  color: #fff;
+}
+
+.dark-scheme .card .card-content-container > p:first-child {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dark-scheme .card .card-content-container p strong {
   color: #fff;
 }
 
@@ -454,14 +492,25 @@ a.btn-primary.btn-outline {
   border-color: #fff;
 }
 
-/* Sponsor logos section */
-.section.sponsors img {
-  max-height: 60px;
-  width: auto;
-  margin: 0 20px;
-  vertical-align: middle;
+.dark-scheme h2 {
+  color: #fff;
 }
 
-.section.sponsors .ticketmaster-logo img {
-  max-height: 40px;
+/* Quick links section - quiet center cards as icon tiles */
+.section.grid-6 .card.quiet.center {
+  border: 1px solid var(--color-gray-200);
+  border-radius: 4px;
+  padding: 24px 12px;
+  transition: all 0.2s ease;
+}
+
+.section.grid-6 .card.quiet.center:hover {
+  border-color: var(--color-wgi-navy);
+  box-shadow: 0 2px 8px rgba(0, 45, 98, 0.15);
+}
+
+/* Sponsors section */
+.section .default-content h3 {
+  color: var(--color-gray-600);
+  font-weight: 600;
 }
