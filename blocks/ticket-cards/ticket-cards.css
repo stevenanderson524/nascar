@@ -1,0 +1,149 @@
+/* ticket-cards block */
+/* Wrapper - ak.js uses .block-content instead of -wrapper */
+.block-content:has(> .ticket-cards) {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px 0 50px;
+}
+
+/* Block = container of 3 cards (rows) displayed horizontally */
+.ticket-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (width >= 900px) {
+  .ticket-cards {
+    flex-direction: row;
+    gap: 30px;
+  }
+}
+
+/* Each row = a card */
+.ticket-cards > div {
+  flex: 1;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image cell */
+.ticket-cards .ticket-cards-image {
+  width: 100%;
+  height: 185px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ticket-cards .ticket-cards-image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ticket-cards .ticket-cards-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content cell */
+.ticket-cards .ticket-cards-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ticket-cards .ticket-cards-content h2 {
+  font-size: 18px;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: #111827;
+  margin: 0 0 4px;
+  letter-spacing: normal;
+}
+
+/* Tag line (em text like "Full Weekend") */
+.ticket-cards .ticket-cards-content p:has(> em:only-child) {
+  margin: 0 0 10px;
+}
+
+.ticket-cards .ticket-cards-content em {
+  font-size: 10px;
+  font-style: normal;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}
+
+.ticket-cards .ticket-cards-content p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 6px 0;
+  color: #333;
+}
+
+/* CTA buttons container */
+.ticket-cards .ticket-cards-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.ticket-cards .ticket-cards-cta a {
+  display: block;
+  text-align: center;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+/* Buy Now = red */
+.ticket-cards .ticket-cards-cta a.cta-buy {
+  background-color: var(--color-wgi-red, #da322a);
+  color: #fff;
+}
+
+/* Learn More / Schedule a Call = navy */
+.ticket-cards .ticket-cards-cta a.cta-secondary {
+  background-color: var(--color-wgi-navy, #004174);
+  color: #fff;
+}
+
+/* Secondary CTAs row */
+.ticket-cards .ticket-cards-cta .cta-row {
+  display: flex;
+  gap: 8px;
+}
+
+.ticket-cards .ticket-cards-cta .cta-row a {
+  flex: 1;
+}
+
+/* Button resets - override EDS auto-decoration */
+main .ticket-cards .button-container { display: inline; }
+main .ticket-cards a.button:any-link {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  white-space: normal;
+}

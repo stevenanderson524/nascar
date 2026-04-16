@@ -1,0 +1,144 @@
+/* Experience Cards block */
+.experience-cards-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.experience-cards {
+  --card-bg: #fff;
+  --card-border: #e5e7eb;
+  --card-radius: 16px;
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --title-color: #111827;
+  --label-color: #000;
+  --desc-color: #000;
+
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px 40px;
+  flex-wrap: wrap;
+}
+
+.experience-cards > div {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 411px;
+  max-width: 411px;
+}
+
+/* Image cell */
+.experience-cards > div > div:first-child {
+  height: 185px;
+  overflow: hidden;
+}
+
+.experience-cards > div > div:first-child picture,
+.experience-cards > div > div:first-child img {
+  display: block;
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+}
+
+/* Title cell */
+.experience-cards .card-title {
+  padding: 16px 20px 0;
+}
+
+.experience-cards .card-title h3 {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--title-color);
+  text-transform: none;
+  margin: 0;
+  letter-spacing: normal;
+}
+
+/* Label cell */
+.experience-cards .card-label {
+  padding: 4px 20px 0;
+}
+
+.experience-cards .card-label p {
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--label-color);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+/* Description cell */
+.experience-cards .card-description {
+  padding: 12px 20px;
+  flex: 1;
+}
+
+.experience-cards .card-description p {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--desc-color);
+  margin: 0 0 8px;
+}
+
+.experience-cards .card-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA cell - uses AuthorKit btn system */
+.experience-cards .card-cta {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.experience-cards .card-cta p {
+  margin: 0;
+  width: 100%;
+}
+
+.experience-cards .card-cta a.btn {
+  font-size: 14px;
+  padding: 12px 25px;
+  text-align: center;
+  justify-content: center;
+}
+
+/* BUY NOW button - full width */
+.experience-cards .card-cta p:first-child a.btn {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* LEARN MORE + SCHEDULE A CALL - row side by side */
+.experience-cards .card-cta .btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.experience-cards .card-cta .btn-group a.btn {
+  flex: 1;
+  text-align: center;
+  display: inline-block;
+}
+
+@media (width < 900px) {
+  .experience-cards {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px;
+  }
+
+  .experience-cards > div {
+    max-width: 100%;
+    width: 100%;
+  }
+}
