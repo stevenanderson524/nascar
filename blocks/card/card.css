@@ -83,3 +83,38 @@
     }
   }
 }
+
+/* WGI Card overrides */
+
+/* Badge/tag styling for first strong text in card content */
+.card .card-content-container > p:first-child {
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--color-wgi-navy);
+}
+
+/* Quick links icon tiles */
+.card.quiet.center img {
+  max-width: 64px;
+  margin: 0 auto;
+}
+
+.card.quiet.center .card-content-container {
+  text-align: center;
+}
+
+.card.quiet.center .card-content-container p {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--body-font-size-s);
+  letter-spacing: 0.03em;
+}
+
+/* Multiple CTA buttons in card */
+.card .card-cta-container {
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: start;
+}
