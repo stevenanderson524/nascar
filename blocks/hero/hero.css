@@ -223,3 +223,19 @@
     }
   }
 }
+
+/* WGI Hero overrides */
+.hero .hero-foreground .hero-heading {
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-shadow: 2px 2px 8px rgb(0 0 0 / 50%);
+}
+
+.hero .hero-foreground p {
+  text-shadow: 1px 1px 4px rgb(0 0 0 / 40%);
+}
+
+.hero.large {
+  --min-height: 600px;
+}
