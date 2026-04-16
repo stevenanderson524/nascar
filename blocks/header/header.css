@@ -250,7 +250,7 @@ header {
 /* WGI Header overrides */
 header {
   background-color: #fff;
-  border-bottom: 3px solid var(--color-wgi-navy);
+  border-bottom: none;
 
   .brand-section .default-content a,
   .brand-section .default-content p {
@@ -261,10 +261,22 @@ header {
     letter-spacing: 0.03em;
   }
 
-  .brand-section .default-content svg,
+  .brand-section .default-content svg.icon-wgi-logo {
+    width: auto;
+    height: 48px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0;
+  }
+
+  .brand-section .default-content svg:not(.icon-wgi-logo),
   .brand-section .default-content img {
     width: auto;
     height: 40px;
+  }
+
+  .brand-section .default-content .brand-text {
+    display: none;
   }
 
   .main-nav-section .main-nav-link {
