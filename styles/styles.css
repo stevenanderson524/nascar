@@ -772,3 +772,72 @@ header.header {
 footer.footer {
   display: block;
 }
+
+/* === Fix section widths for block-containing sections === */
+/* Remove excessive side padding from sections containing wide blocks */
+.section:has(.ticket-cards),
+.section:has(.experience-cards),
+.section:has(.event-bar),
+.section:has(.sponsor-carousel) {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section:has(.hero),
+.section:has(.newsletter),
+.section:has(.hospitality-cards) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Block content containers - widen and center */
+.block-content:has(> .ticket-cards),
+.block-content:has(> .experience-cards) {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px 0 50px;
+}
+
+.block-content:has(> .event-bar) {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.block-content:has(> .callouts) {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.block-content:has(> .sponsor-carousel) {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Default content (text above blocks) - center with same width */
+.section:has(.ticket-cards) > .default-content,
+.section:has(.experience-cards) > .default-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header logo sizing */
+.header .header-logo img {
+  height: 50px;
+  width: auto;
+}
+
+/* Hospitality circular images - make larger */
+.hospitality-cards .hospitality-card-image {
+  width: 200px;
+  height: 200px;
+}
+
+/* Sponsor card images - let them be taller */
+.sponsor-carousel .sponsor-card {
+  min-height: 140px;
+}
+
+.sponsor-carousel .sponsor-card img {
+  max-height: 130px;
+}
