@@ -759,3 +759,16 @@ main picture img {
 .section:has(.event-bar) {
   max-width: 100%;
 }
+
+/* Show header/footer once decorated by ak.js */
+header.header {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: auto;
+}
+
+footer.footer {
+  display: block;
+}
