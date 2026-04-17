@@ -27,23 +27,20 @@ var img = pic.querySelector("img");
 if (!img) return;
 if (img.complete && img.naturalWidth > 10) return;
 var alt = img.alt || "";
+var origSrc = findOriginalSrc(alt);
+if (origSrc) {
 var newImg = document.createElement("img");
 newImg.alt = alt;
-newImg.loading = "lazy";
-newImg.style.width = "100%";
-newImg.style.height = "auto";
-// Use the alt text to find the original image
-var origSrc = findOriginalSrc(alt, pic);
-if (origSrc) {
+newImg.loading = "eager";
 newImg.src = origSrc;
+newImg.style.cssText = "width:100%;height:auto;display:block;";
 pic.parentNode.replaceChild(newImg, pic);
 }
 });
-}, 2000);
+}, 1500);
 }
 
-function findOriginalSrc(alt, pic) {
-// Map alt text to original image filenames
+function findOriginalSrc(alt) {
 var map = {
 "Watkins Glen International racing action": "/drafts/images/hero-poster.jpeg",
 "Watkins Glen International racetrack": "/drafts/images/hero-poster.jpeg",
@@ -65,7 +62,6 @@ var map = {
 "Glen Club": "/drafts/images/WGI_GlenClub.jpg",
 "Glen Club hospitality area": "/drafts/images/WGI_GlenClub.jpg",
 "Sahlens Pit Inn": "/drafts/images/SPI_350x197.jpg",
-"Sahlen\u0027s Pit Inn": "/drafts/images/SPI_350x197.jpg",
 "Sahlen\u0027s Pit Inn hospitality area": "/drafts/images/SPI_350x197.jpg",
 "Busch Light at The Bog hospitality area": "/drafts/images/BUSCHLIGHTbog.jpg",
 "Mission Party Deck hospitality area": "/drafts/images/MissionPartyDeck_350x197-1.jpg",
