@@ -43,7 +43,7 @@ export default async function decorate(block) {
 
       const allLinks = [...ctaCell.querySelectorAll('a')];
       allLinks.forEach((link) => {
-        const isNegative = link.classList.contains('btn-negative');
+        const isNegative = link.classList.contains('btn-negative') || link.textContent.trim().toUpperCase() === 'BUY NOW';
         link.classList.remove('button', 'btn-negative', 'btn-primary', 'btn-secondary', 'accent');
 
         if (isNegative) {
