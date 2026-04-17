@@ -26,11 +26,11 @@ document.querySelectorAll("main picture").forEach(function(pic) {
 var img = pic.querySelector("img");
 if (!img) return;
 if (img.complete && img.naturalWidth > 10) return;
-var alt = img.alt || "";
+var alt = (img.alt || "").toLowerCase().trim();
 var origSrc = findOriginalSrc(alt);
 if (origSrc) {
 var newImg = document.createElement("img");
-newImg.alt = alt;
+newImg.alt = img.alt || "";
 newImg.loading = "eager";
 newImg.src = origSrc;
 newImg.style.cssText = "width:100%;height:auto;display:block;";
@@ -42,37 +42,49 @@ pic.parentNode.replaceChild(newImg, pic);
 
 function findOriginalSrc(alt) {
 var map = {
-"Watkins Glen International racing action": "/drafts/images/hero-poster.jpeg",
-"Watkins Glen International racetrack": "/drafts/images/hero-poster.jpeg",
-"Grandstand Seating": "/drafts/images/WGI_GA_CALLOUT.png",
-"Camp With Us": "/drafts/images/Camping_1300x731.jpg",
-"Busch Light at The Bog": "/drafts/images/WGI_TheBog3.jpg",
-"General Admission": "/drafts/images/imsa-sweeps.jpg",
-"General Admission image": "/drafts/images/imsa-sweeps.jpg",
-"Mission Party Deck": "/drafts/images/mission-deck.png",
-"Mission Party Deck image": "/drafts/images/mission-deck.png",
-"Camping": "/drafts/images/camping-wgi.jpg",
-"Camping image": "/drafts/images/camping-wgi.jpg",
-"Pre-race at Watkins Glen": "/drafts/images/WGI_entitlement.jpg",
-"Hosts on a stage at Watkins Glen International lead a fan interaction during a Go Bowling at The Glen event": "/drafts/images/WGI_entitlement.jpg",
-"On Location travel packages": "/drafts/images/Go_Bowling_Callout2.jpg",
-"Pre-race experience of NASCAR racing at Watkins Glen International": "/drafts/images/Go_Bowling_Callout2.jpg",
-"Historic racing at Watkins Glen": "/drafts/images/WGIHistory_600x338.png",
-"Formula One Racing at Watkins Glen International": "/drafts/images/WGIHistory_600x338.png",
-"Glen Club": "/drafts/images/WGI_GlenClub.jpg",
-"Glen Club hospitality area": "/drafts/images/WGI_GlenClub.jpg",
-"Sahlens Pit Inn": "/drafts/images/SPI_350x197.jpg",
-"Sahlen\u0027s Pit Inn hospitality area": "/drafts/images/SPI_350x197.jpg",
-"Busch Light at The Bog hospitality area": "/drafts/images/BUSCHLIGHTbog.jpg",
-"Mission Party Deck hospitality area": "/drafts/images/MissionPartyDeck_350x197-1.jpg",
-"Ticketmaster": "/drafts/images/ticketmaster-logo.png",
-"Busch Beer": "/drafts/images/sponsor-busch.png",
-"Toyota": "/drafts/images/sponsor-toyota.png",
-"Xfinity": "/drafts/images/sponsor-xfinity.png",
-"Watkins Glen International": "/drafts/images/newsletter-bg.png",
-"Watkins Glen International background": "/drafts/images/newsletter-bg.png"
+"hero-poster": "/drafts/images/hero-poster.jpeg",
+"grandstand": "/drafts/images/WGI_GA_CALLOUT.png",
+"camp with us": "/drafts/images/Camping_1300x731.jpg",
+"camping at watkins": "/drafts/images/Camping_1300x731.jpg",
+"camping-wgi": "/drafts/images/camping-wgi.jpg",
+"busch light at the bog at": "/drafts/images/WGI_TheBog3.jpg",
+"busch light at the bog hospitality": "/drafts/images/BUSCHLIGHTbog.jpg",
+"general admission at": "/drafts/images/imsa-sweeps.jpg",
+"general admission image": "/drafts/images/imsa-sweeps.jpg",
+"general admission": "/drafts/images/imsa-sweeps.jpg",
+"mission party deck at": "/drafts/images/mission-deck.png",
+"mission party deck image": "/drafts/images/mission-deck.png",
+"mission party deck hospitality": "/drafts/images/MissionPartyDeck_350x197-1.jpg",
+"pre-race": "/drafts/images/WGI_entitlement.jpg",
+"hosts on a stage": "/drafts/images/WGI_entitlement.jpg",
+"on location": "/drafts/images/Go_Bowling_Callout2.jpg",
+"historic racing": "/drafts/images/WGIHistory_600x338.png",
+"formula one": "/drafts/images/WGIHistory_600x338.png",
+"glen club": "/drafts/images/WGI_GlenClub.jpg",
+"sahlen": "/drafts/images/SPI_350x197.jpg",
+"ticketmaster": "/drafts/images/ticketmaster-logo.png",
+"busch beer": "/drafts/images/sponsor-busch.png",
+"toyota": "/drafts/images/sponsor-toyota.png",
+"xfinity": "/drafts/images/sponsor-xfinity.png",
+"centralus": "/drafts/images/sponsor-centralus.png",
+"coca-cola": "/drafts/images/sponsor-coca-cola.jpg",
+"corning": "/drafts/images/sponsor-corning.jpeg",
+"freeway": "/drafts/images/sponsor-freeway.png",
+"general tire": "/drafts/images/sponsor-general-tire.png",
+"go bowling": "/drafts/images/sponsor-go-bowling.png",
+"hilliard": "/drafts/images/sponsor-hilliard.jpg",
+"lp": "/drafts/images/sponsor-lp.png",
+"mission foods": "/drafts/images/sponsor-mission.png",
+"on location exp": "/drafts/images/sponsor-on-location.png",
+"newsletter": "/drafts/images/newsletter-bg.png",
+"watkins glen international background": "/drafts/images/newsletter-bg.png"
 };
-return map[alt] || null;
+// Fuzzy match: check if alt contains any map key
+var keys = Object.keys(map);
+for (var i = 0; i < keys.length; i++) {
+if (alt.indexOf(keys[i]) > -1) return map[keys[i]];
+}
+return null;
 }
 
 await loadPage();
