@@ -19,7 +19,7 @@ export default async function decorate(block) {
 
     allLinks.forEach((link) => {
       // Detect the ak.js-applied classes
-      const isNegative = link.classList.contains('btn-negative'); // was <del> = red CTA
+      const isNegative = link.classList.contains('btn-negative') || link.textContent.trim().toUpperCase() === 'BUY NOW';
       const isPrimary = link.classList.contains('btn-primary'); // was <strong> = secondary CTA
 
       // Remove all ak.js classes
