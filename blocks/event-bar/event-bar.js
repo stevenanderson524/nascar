@@ -1,42 +1,38 @@
 export default async function decorate(block) {
-  const rows = [...block.children];
+const rows = [...block.children];
+const nav = document.createElement('nav');
+nav.className = 'event-bar-nav';
 
-  rows.forEach((row) => {
-    const cells = [...row.children];
-    // cells[0] = icon cell (contains span.icon)
-    // cells[1] = label cell (contains p > a)
+rows.forEach((row) => {
+const cells = [...row.children];
+const item = document.createElement('div');
+item.className = 'event-bar-item';
 
-    const iconCell = cells[0];
-    const labelCell = cells[1];
+// Cell 0 = icon, Cell 1 = link text
+const iconCell = cells[0];
+const textCell = cells[1];
 
-    // Extract the icon element (move, not clone - so loadIcons can still find it)
-    const icon = iconCell?.querySelector('.icon') || iconCell?.querySelector('svg') || iconCell?.querySelector('img');
-    // Extract the link
-    const link = labelCell?.querySelector('a');
+// Get the icon span
+const iconSpan = iconCell?.querySelector('\.icon');
+if (iconSpan) {
+const iconWrap = document.createElement('div');
+iconWrap.className = 'event-bar-icon';
+iconWrap.append(iconSpan);
+item.append(iconWrap);
+}
 
-    if (!link) return;
+// Get the link
+const link = textCell?.querySelector('a');
+if (link) {
+const labelWrap = document.createElement('div');
+labelWrap.className = 'event-bar-label';
+labelWrap.append(link);
+item.append(labelWrap);
+}
 
-    // Build the card: wrap everything in the anchor
-    const anchor = document.createElement('a');
-    anchor.href = link.href;
-    anchor.title = link.textContent.trim();
-    anchor.setAttribute('aria-label', link.textContent.trim());
-    if (link.target) anchor.target = link.target;
+nav.append(item);
+});
 
-    // Icon wrapper
-    const iconDiv = document.createElement('div');
-    iconDiv.className = 'event-bar-icon';
-    if (icon) iconDiv.appendChild(icon); // move, not clone
-    anchor.appendChild(iconDiv);
-
-    // Label wrapper
-    const labelDiv = document.createElement('div');
-    labelDiv.className = 'event-bar-label';
-    labelDiv.textContent = link.textContent.trim();
-    anchor.appendChild(labelDiv);
-
-    // Replace row contents with the single anchor
-    row.textContent = '';
-    row.appendChild(anchor);
-  });
+block.textContent = '';
+block.append(nav);
 }
