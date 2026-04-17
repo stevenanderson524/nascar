@@ -29,7 +29,13 @@ export default async function decorate(block) {
       }
 
       const descPs = [...descCell.querySelectorAll('p')];
-      descPs.forEach((p) => content.appendChild(p));
+      if (descPs.length > 0) {
+        descPs.forEach((p) => content.appendChild(p));
+      } else if (descCell.textContent.trim()) {
+        const p = document.createElement('p');
+        p.textContent = descCell.textContent.trim();
+        content.appendChild(p);
+      }
 
       // CTAs - detect ak.js classes
       const ctaContainer = document.createElement('div');
