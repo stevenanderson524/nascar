@@ -125,3 +125,11 @@
 /* Override EDS button defaults */
 main .callouts .button-container { display: contents; }
 main .callouts a.button:any-link { all: unset; cursor: pointer; }
+
+
+/* Alternate image position on even rows */
+@media (min-width: 900px) {
+  .callouts > div:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+}
