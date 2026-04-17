@@ -59,7 +59,7 @@ export default async function decorate(block) {
 
   const allLinks = [...contentCell.querySelectorAll('a')];
   allLinks.forEach((link) => {
-    const isNegative = link.classList.contains('btn-negative');
+    const isNegative = link.classList.contains('btn-negative') || link.textContent.trim().toUpperCase() === 'BUY NOW';
     link.className = ''; // Reset all classes
 
     if (isNegative) {
