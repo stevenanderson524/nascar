@@ -106,12 +106,17 @@
   overflow: hidden;
 }
 
-.callouts .callout-image picture,
+.callouts .callout-image picture {
+  display: block;
+  height: 100%;
+}
+
 .callouts .callout-image img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
 }
 
 @media (min-width: 900px) {
