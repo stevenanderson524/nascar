@@ -14,10 +14,10 @@ fixBrokenImages();
 }
 function fixBrokenImages() {
 setTimeout(function() {
+// Pass 1: Replace broken <picture> elements
 document.querySelectorAll("main picture").forEach(function(pic) {
 var img = pic.querySelector("img");
-if (!img) return;
-if (img.naturalWidth > 10) return;
+if (!img || img.naturalWidth > 10) return;
 var alt = (img.alt || "").toLowerCase().trim();
 var origSrc = findOrigSrc(alt);
 if (origSrc) {
@@ -29,16 +29,15 @@ n.style.cssText = "width:100%;height:auto;display:block;";
 pic.parentNode.replaceChild(n, pic);
 }
 });
-// Also fix any remaining plain img elements with media_ src that failed
+// Pass 2: Fix ALL broken img elements (including those processed by block JS)
 document.querySelectorAll("main img").forEach(function(img) {
 if (img.naturalWidth > 10) return;
-if (img.src.indexOf("/drafts/images/") > -1 || img.src === "about:error") {
 var alt = (img.alt || "").toLowerCase().trim();
 var origSrc = findOrigSrc(alt);
-if (origSrc && origSrc !== img.src) {
+if (origSrc) {
 img.src = origSrc;
 img.loading = "eager";
-}
+img.style.cssText = img.style.cssText + ";width:100%;height:auto;display:block;";
 }
 });
 }, 1500);
@@ -64,10 +63,11 @@ var m = {
 "sahlen": "/drafts/images/SPI_350x197.jpg",
 "ticketmaster": "/drafts/images/ticketmaster-logo.png",
 "busch beer": "/drafts/images/sponsor-busch.png",
+"busch": "/drafts/images/sponsor-busch.png",
 "toyota": "/drafts/images/sponsor-toyota.png",
 "xfinity": "/drafts/images/sponsor-xfinity.png",
 "centralus": "/drafts/images/sponsor-centralus.png",
-"coca-cola": "/drafts/images/sponsor-coca-cola.jpg",
+"coca": "/drafts/images/sponsor-coca-cola.jpg",
 "corning": "/drafts/images/sponsor-corning.jpeg",
 "freeway": "/drafts/images/sponsor-freeway.png",
 "general tire": "/drafts/images/sponsor-general-tire.png",
