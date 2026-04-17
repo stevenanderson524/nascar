@@ -36,17 +36,18 @@ main > div:has(> .ticket-cards) {
 /* Image cell */
 .ticket-cards .ticket-cards-image {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
   flex-shrink: 0;
 }
 
-.ticket-cards .ticket-cards-image picture,
+.ticket-cards .ticket-cards-image picture {
+  display: block;
+}
+
 .ticket-cards .ticket-cards-image img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  border-radius: 16px 16px 0 0;
 }
 
 /* Content cell */
