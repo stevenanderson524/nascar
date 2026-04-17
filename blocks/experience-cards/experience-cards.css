@@ -33,17 +33,18 @@ main > div:has(> .experience-cards) {
 /* Image */
 .experience-cards .experience-cards-image {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
   flex-shrink: 0;
 }
 
-.experience-cards .experience-cards-image picture,
+.experience-cards .experience-cards-image picture {
+  display: block;
+}
+
 .experience-cards .experience-cards-image img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  border-radius: 16px 16px 0 0;
 }
 
 /* Content */
