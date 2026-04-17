@@ -25,18 +25,23 @@ var bust = "cb=" + Date.now();
 setTimeout(function() {
 document.querySelectorAll("main picture").forEach(function(pic) {
 var img = pic.querySelector("img");
-if (!img || img.naturalWidth > 10) return;
-// Remove all sources - they use webp/jpg conversions that are cached broken
+if (!img) return;
+// Remove all source elements to prevent webp/format issues
 pic.querySelectorAll("source").forEach(function(s) { s.remove(); });
-// Add cache buster to img src
 var src = img.getAttribute("src") || "";
 if (src.indexOf("media_") > -1) {
+// Replace the entire img element to bypass browser error cache
 var base = src.split("?")[0];
-// Use png format instead of jpg to avoid broken conversion cache
-img.src = base + "?width=750&format=png&optimize=medium&" + bust;
+// Change .jpg extension to .png if the upload was .png
+base = base.replace(/\.jpg$/, ".png").replace(/\.jpeg$/, ".png");
+var newImg = document.createElement("img");
+newImg.alt = img.alt || "";
+newImg.loading = img.loading || "lazy";
+newImg.src = base + "?width=750&" + bust;
+img.parentNode.replaceChild(newImg, img);
 }
 });
-}, 2000);
+}, 1500);
 }
 
 await loadPage();
