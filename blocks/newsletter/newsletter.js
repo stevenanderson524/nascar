@@ -1,111 +1,144 @@
 export default async function decorate(block) {
-  const rows = [...block.children];
+const rows = [...block.children];
 
-  // Row 0: background image
-  const bgRow = rows[0];
-  const bgPic = bgRow?.querySelector('picture');
-  const bgImg = bgRow?.querySelector('img');
+// Row 0: background image
+const bgRow = rows[0];
+const bgImg = bgRow.querySelector("img");
+const bgSrc = bgImg ? bgImg.src : "";
+bgRow.remove();
 
-  // Row 1: heading
-  const headingRow = rows[1];
-  const heading = headingRow?.querySelector('h2');
+// Set background image on block
+if (bgSrc) {
+block.style.backgroundImage = `url('${bgSrc}')`;
+}
 
-  // Row 2: subtitle
-  const subtitleRow = rows[2];
-  const subtitle = subtitleRow?.querySelector('p');
+// Row 1: heading + subheading
+const headingRow = rows[1];
+const headingCell = headingRow.querySelector("div");
+const h2 = headingCell.querySelector("h2");
+const sub = headingCell.querySelector("p");
 
-  // Row 3: field labels
-  const fieldsRow = rows[3];
-  const fieldLabels = [...(fieldsRow?.children || [])].map(
-    (cell) => cell.textContent.trim(),
-  ).filter(Boolean);
+// Row 2: field labels (First Name, Last Name, Email)
+const fieldsRow = rows[2];
+const fieldCells = [...fieldsRow.children];
+const fieldLabels = fieldCells.map((c) => c.textContent.trim());
 
-  // Row 4: button text
-  const buttonRow = rows[4];
-  const buttonText = buttonRow?.textContent?.trim() || 'Sign Up';
+// Row 3: terms/consent text
+const termsRow = rows[3];
+const termsCell = termsRow.querySelector("div");
+const termsHTML = termsCell.innerHTML;
 
-  // Clear block
-  block.textContent = '';
+// Row 4: button text
+const buttonRow = rows[4];
+const buttonText = buttonRow.textContent.trim();
 
-  // Background
-  const bgDiv = document.createElement('div');
-  bgDiv.className = 'newsletter-bg';
-  if (bgPic) {
-    bgDiv.appendChild(bgPic);
-  } else if (bgImg) {
-    bgDiv.appendChild(bgImg);
-  }
-  block.appendChild(bgDiv);
+// Clear block
+block.textContent = "";
 
-  // Overlay
-  const overlay = document.createElement('div');
-  overlay.className = 'newsletter-overlay';
-  block.appendChild(overlay);
+// Build overlay
+const overlay = document.createElement("div");
+overlay.className = "newsletter-overlay";
+block.append(overlay);
 
-  // Content wrapper (two columns)
-  const content = document.createElement('div');
-  content.className = 'newsletter-content';
+// Build content container
+const container = document.createElement("div");
+container.className = "newsletter-content";
 
-  // Left column: heading + subtitle
-  const left = document.createElement('div');
-  left.className = 'newsletter-header';
-  if (heading) left.appendChild(heading);
-  if (subtitle) {
-    subtitle.className = 'newsletter-subtitle';
-    left.appendChild(subtitle);
-  }
-  content.appendChild(left);
+// Header
+const header = document.createElement("div");
+header.className = "newsletter-header";
+if (h2) header.append(h2);
+if (sub) {
+sub.className = "newsletter-subheading";
+header.append(sub);
+}
+container.append(header);
 
-  // Right column: form
-  const form = document.createElement('form');
-  form.className = 'newsletter-form';
-  form.addEventListener('submit', (e) => e.preventDefault());
+// Form
+const form = document.createElement("form");
+form.className = "newsletter-form";
+form.setAttribute("novalidate", "");
 
-  fieldLabels.forEach((label) => {
-    const group = document.createElement('div');
-    group.className = 'newsletter-field';
-    const labelEl = document.createElement('label');
-    labelEl.textContent = label;
-    const input = document.createElement('input');
-    input.type = label.toLowerCase().includes('email') ? 'email' : 'text';
-    input.placeholder = `*${label}`;
-    input.name = label.toLowerCase().replace(/\s+/g, '_');
-    input.required = true;
-    group.appendChild(labelEl);
-    group.appendChild(input);
-    form.appendChild(group);
-  });
+// Alert container
+const alertContainer = document.createElement("div");
+alertContainer.className = "newsletter-alerts";
+form.append(alertContainer);
 
-  // Terms checkbox
-  const terms = document.createElement('div');
-  terms.className = 'newsletter-terms';
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.id = 'newsletter-terms';
-  const termsLabel = document.createElement('label');
-  termsLabel.htmlFor = 'newsletter-terms';
-  termsLabel.textContent = '*By signing up, you agree to receive communications from Watkins Glen International in accordance with our Privacy Policy and Terms of Use.';
-  terms.appendChild(checkbox);
-  terms.appendChild(termsLabel);
-  form.appendChild(terms);
+// Input fields
+const fieldsContainer = document.createElement("div");
+fieldsContainer.className = "newsletter-fields";
 
-  // Required note
-  const req = document.createElement('p');
-  req.className = 'newsletter-required';
-  req.textContent = '* Required';
-  form.appendChild(req);
+fieldLabels.forEach((label) => {
+const fieldDiv = document.createElement("div");
+fieldDiv.className = "newsletter-field";
+const input = document.createElement("input");
+input.type = label.toLowerCase() === "email" ? "email" : "text";
+input.name = label.toLowerCase().replace(/\s+/g, "_");
+input.placeholder = `*${label}`;
+input.required = true;
+const labelEl = document.createElement("label");
+labelEl.className = "visually-hidden";
+labelEl.textContent = label;
+fieldDiv.append(labelEl, input);
+fieldsContainer.append(fieldDiv);
+});
+form.append(fieldsContainer);
 
-  // Submit
-  const btn = document.createElement('button');
-  btn.type = 'submit';
-  btn.className = 'btn btn-primary';
-  btn.textContent = buttonText;
-  form.appendChild(btn);
+// Checkbox / terms
+const checkDiv = document.createElement("div");
+checkDiv.className = "newsletter-terms";
+const checkLabel = document.createElement("label");
+checkLabel.className = "newsletter-checkbox-label";
+const checkbox = document.createElement("input");
+checkbox.type = "checkbox";
+checkbox.name = "newsletter_terms";
+checkbox.required = true;
+const termsSpan = document.createElement("span");
+termsSpan.innerHTML = termsHTML;
+checkLabel.append(checkbox, termsSpan);
+checkDiv.append(checkLabel);
 
-  content.appendChild(form);
-  block.appendChild(content);
+const reqText = document.createElement("p");
+reqText.className = "newsletter-required";
+reqText.textContent = "* Required";
+checkDiv.append(reqText);
+form.append(checkDiv);
 
-  // Make parent section full-width
-  const section = block.closest('main > div') || block.parentElement;
-  if (section) section.classList.add('full-width');
+// Submit button
+const submitDiv = document.createElement("div");
+submitDiv.className = "newsletter-submit";
+const btn = document.createElement("button");
+btn.type = "submit";
+btn.className = "newsletter-btn";
+btn.textContent = buttonText;
+submitDiv.append(btn);
+form.append(submitDiv);
+
+// Simple client-side validation feedback
+form.addEventListener("submit", (e) => {
+e.preventDefault();
+const inputs = form.querySelectorAll("input[required]");
+let valid = true;
+inputs.forEach((inp) => {
+if (!inp.value.trim()) {
+inp.classList.add("error");
+valid = false;
+} else {
+inp.classList.remove("error");
+}
+});
+if (!checkbox.checked) {
+checkbox.classList.add("error");
+valid = false;
+} else {
+checkbox.classList.remove("error");
+}
+if (valid) {
+alertContainer.innerHTML = '<p class="newsletter-success">You have been signed up successfully.</p>';
+form.reset();
+}
+});
+
+container.append(form);
+block.append(container);
 }
