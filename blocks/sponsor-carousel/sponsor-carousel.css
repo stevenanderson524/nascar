@@ -94,3 +94,5 @@ main > div:has(> .sponsor-carousel) {
   text-align: center;
   line-height: 1.2;
 }
+/* Hide sponsor name text labels - match theglen.com */
+.sponsor-carousel .sponsor-name { display: none; }
