@@ -1,27 +1,17 @@
 import { loadArea, setConfig } from "./ak.js";
 
 const hostnames = ["authorkit.dev"];
-
-const locales = {
-"": { lang: "en" },
-};
-
+const locales = { "": { lang: "en" } };
 const linkBlocks = [
 { fragment: "/fragments/" },
 { schedule: "/schedules/" },
 { youtube: "https://www.youtube" },
 ];
-
 const components = ["fragment", "schedule"];
 
 const decorateArea = ({ area = document }) => {
-const eagerLoad = (parent, selector) => {
-const img = parent.querySelector(selector);
-if (!img) return;
-img.removeAttribute("loading");
-img.fetchPriority = "high";
-};
-eagerLoad(area, "img");
+const img = area.querySelector("img");
+if (img) { img.removeAttribute("loading"); img.fetchPriority = "high"; }
 };
 
 export async function loadPage() {
@@ -31,24 +21,22 @@ fixBrokenImages();
 }
 
 function fixBrokenImages() {
-// Wait for images to attempt loading, then fix broken ones
+var bust = "cb=" + Date.now();
 setTimeout(function() {
-document.querySelectorAll("main img").forEach(function(img) {
-if (img.naturalWidth === 0 || img.src.indexOf("about:error") > -1) {
-// Try the picture source as fallback
-var picture = img.closest("picture");
-if (picture) {
-var sources = picture.querySelectorAll("source");
-sources.forEach(function(s) { s.remove(); });
-}
-// Extract original filename from media hash if possible
-// Or just reload with a cache buster
-if (img.src.indexOf("media_") > -1) {
-img.src = img.src.split("?")[0] + "?t=" + Date.now();
-}
+document.querySelectorAll("main picture").forEach(function(pic) {
+var img = pic.querySelector("img");
+if (!img || img.naturalWidth > 10) return;
+// Remove all sources - they use webp/jpg conversions that are cached broken
+pic.querySelectorAll("source").forEach(function(s) { s.remove(); });
+// Add cache buster to img src
+var src = img.getAttribute("src") || "";
+if (src.indexOf("media_") > -1) {
+var base = src.split("?")[0];
+// Use png format instead of jpg to avoid broken conversion cache
+img.src = base + "?width=750&format=png&optimize=medium&" + bust;
 }
 });
-}, 3000);
+}, 2000);
 }
 
 await loadPage();
