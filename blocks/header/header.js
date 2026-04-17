@@ -41,7 +41,7 @@ logoDiv.appendChild(a);
 }
 topBar.appendChild(logoDiv);
 
-// Main nav
+// Main nav - links may be inside <p> tags due to EDS formatting
 const mainNav = document.createElement("nav");
 mainNav.className = "header-nav";
 if (mainNavSection) {
@@ -52,35 +52,14 @@ navUl.className = "header-nav-list";
 [...topUl.children].forEach(function(li) {
 const navLi = document.createElement("li");
 navLi.className = "header-nav-item";
-const link = li.querySelector(":scope > a");
+// Find link - could be direct child or inside <p>
+const link = li.querySelector("a");
 if (link) {
 const a = document.createElement("a");
 a.href = link.href;
 a.textContent = link.textContent.trim();
 a.className = "header-nav-link";
 navLi.appendChild(a);
-}
-const subUl = li.querySelector(":scope > ul");
-if (subUl) {
-navLi.classList.add("has-dropdown");
-const dropdown = document.createElement("div");
-dropdown.className = "header-dropdown";
-const ddUl = document.createElement("ul");
-[...subUl.children].forEach(function(subLi) {
-const ddLi = document.createElement("li");
-const subLink = subLi.querySelector("a");
-if (subLink) {
-const sa = document.createElement("a");
-sa.href = subLink.href;
-sa.textContent = subLink.textContent.trim();
-ddLi.appendChild(sa);
-}
-ddUl.appendChild(ddLi);
-});
-dropdown.appendChild(ddUl);
-navLi.appendChild(dropdown);
-navLi.addEventListener("mouseenter", function() { navLi.classList.add("dropdown-open"); });
-navLi.addEventListener("mouseleave", function() { navLi.classList.remove("dropdown-open"); });
 }
 navUl.appendChild(navLi);
 });
@@ -103,6 +82,14 @@ utilDiv.appendChild(a);
 });
 }
 topBar.appendChild(utilDiv);
+
+// Hamburger
+const hamburger = document.createElement("button");
+hamburger.className = "header-hamburger";
+hamburger.setAttribute("aria-label", "Toggle menu");
+hamburger.innerHTML = "<span></span><span></span><span></span>";
+hamburger.addEventListener("click", function() { block.classList.toggle("nav-open"); });
+topBar.appendChild(hamburger);
 
 block.appendChild(topBar);
 }
