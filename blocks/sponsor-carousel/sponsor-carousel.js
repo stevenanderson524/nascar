@@ -29,7 +29,6 @@ export default async function decorate(block) {
 
   sponsorRows.forEach((row) => {
     const cells = [...row.children];
-    // Cell 0 = image, Cell 1 = link
     const imgCell = cells[0];
     const linkCell = cells[1];
 
@@ -87,8 +86,8 @@ export default async function decorate(block) {
 
   const getCardWidth = () => {
     const card = track.querySelector('.sponsor-card');
-    if (!card) return 182;
-    return card.offsetWidth + 12; // card width + gap
+    if (!card) return 260;
+    return card.offsetWidth + 20; // card width + gap
   };
 
   const getVisibleCount = () => {
@@ -100,6 +99,7 @@ export default async function decorate(block) {
 
   const updateTrack = () => {
     track.style.transform = `translateX(-${offset * getCardWidth()}px)`;
+    track.style.transition = 'transform 0.4s ease';
   };
 
   prevBtn.addEventListener('click', () => {

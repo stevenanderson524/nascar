@@ -1,6 +1,7 @@
 export default async function decorate(block) {
-  // Fetch footer content - try /drafts/footer first, fallback to /footer
-  let resp = await fetch('/drafts/footer.plain.html');
+  // Fetch footer content
+  const footerPath = '/drafts/footer';
+  let resp = await fetch(`${footerPath}.plain.html`);
   if (!resp.ok) {
     resp = await fetch('/footer.plain.html');
   }
@@ -15,10 +16,8 @@ export default async function decorate(block) {
   const linksSection = sections[1];
   const copySection = sections[2];
 
-  // Clear block and create inner wrapper
+  // Clear block
   block.textContent = '';
-  const wrapper = document.createElement('div');
-  wrapper.className = 'footer-content';
 
   // === Main content ===
   if (mainSection) {
@@ -73,7 +72,7 @@ export default async function decorate(block) {
 
     // Social links
     const socialP = [...mainSection.querySelectorAll('p')].find(
-      (p) => p.textContent.includes('Facebook') || p.textContent.includes('Instagram'),
+      (p) => p.textContent.includes('Facebook') || p.textContent.includes('Instagram')
     );
     if (socialP) {
       const socDiv = document.createElement('div');
@@ -91,13 +90,13 @@ export default async function decorate(block) {
       mainDiv.appendChild(socDiv);
     }
 
-    wrapper.appendChild(mainDiv);
+    block.appendChild(mainDiv);
   }
 
   // === Links ===
   if (linksSection) {
     const linksDiv = document.createElement('div');
-    linksDiv.className = 'footer-nav-links';
+    linksDiv.className = 'footer-links';
     const links = linksSection.querySelectorAll('a');
     links.forEach((link) => {
       const a = document.createElement('a');
@@ -106,7 +105,7 @@ export default async function decorate(block) {
       if (link.target) a.target = link.target;
       linksDiv.appendChild(a);
     });
-    wrapper.appendChild(linksDiv);
+    block.appendChild(linksDiv);
   }
 
   // === Copyright ===
@@ -119,8 +118,6 @@ export default async function decorate(block) {
       pp.textContent = p.textContent;
       copyDiv.appendChild(pp);
     });
-    wrapper.appendChild(copyDiv);
+    block.appendChild(copyDiv);
   }
-
-  block.appendChild(wrapper);
 }

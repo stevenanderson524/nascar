@@ -1,163 +1,127 @@
-/* Callouts block - card-style callouts with text left, image right */
-.callouts-wrapper {
-max-width: 1100px;
-margin: 0 auto;
-padding: 0 20px;
+/* Callouts Block */
+.callouts {
+  max-width: var(--grid-container-width, 83.4%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
+/* Each callout card (row) */
 .callouts > div {
-background: #fff;
-border-radius: 10px;
-box-shadow: 3px 4px 12px 0 rgba(0 0 0 / 0.2);
-margin-bottom: 20px;
-overflow: hidden;
-display: flex;
-flex-direction: column;
-min-height: 328px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 3px 4px 12px 0 rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 900px) {
+  .callouts > div {
+    flex-direction: row;
+    align-items: stretch;
+  }
 }
 
 /* Text cell */
-.callouts > div > div:first-child {
-padding: 30px 20px 20px;
-display: flex;
-flex-direction: column;
+.callouts .callout-text {
+  flex: 1;
+  padding: 30px 33px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.callouts .callout-text h3 {
+  font-family: var(--heading-font-family, Montserrat, sans-serif);
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+  color: #111;
+}
+
+.callouts .callout-text em {
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.callouts .callout-text h4 {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+  color: #111;
+}
+
+.callouts .callout-text p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 8px;
+  color: #333;
+}
+
+.callouts .callout-text ul {
+  font-size: 14px;
+  margin: 0 0 16px;
+  padding-left: 20px;
+  color: #333;
+}
+
+.callouts .callout-text ul li {
+  margin-block: 4px;
+}
+
+.callouts .callout-text a.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  line-height: 1;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.callouts .callout-text a.cta-buy {
+  background-color: var(--color-wgi-red, #da322a);
+  color: #fff;
+}
+
+.callouts .callout-text a.cta-secondary {
+  background-color: var(--color-wgi-navy, #004174);
+  color: #fff;
 }
 
 /* Image cell */
-.callouts > div > div:last-child {
-overflow: hidden;
+.callouts .callout-image {
+  overflow: hidden;
 }
 
-.callouts > div > div:last-child picture,
-.callouts > div > div:last-child img {
-display: block;
-width: 100%;
-height: 100%;
-object-fit: cover;
+.callouts .callout-image picture,
+.callouts .callout-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Headings */
-.callouts h3 {
-font-family: "Stainless-Black", Helvetica, Arial, sans-serif;
-font-size: 24px;
-font-weight: 900;
-line-height: 1.2;
-text-transform: uppercase;
-color: #000;
-margin: 0 0 4px;
+@media (min-width: 900px) {
+  .callouts .callout-image {
+    flex: 0 0 46%;
+    max-width: 600px;
+    min-height: 280px;
+  }
 }
 
-.callouts h4 {
-font-family: "Stainless-Black", Helvetica, Arial, sans-serif;
-font-size: 23px;
-font-weight: 900;
-line-height: normal;
-text-transform: uppercase;
-color: #000;
-margin: 0 0 8px;
-}
-
-/* Sub-header (the bold p after h3) */
-.callouts > div > div:first-child > p:first-of-type strong {
-font-size: 14px;
-font-weight: 700;
-text-transform: uppercase;
-line-height: 14px;
-}
-
-/* Body text */
-.callouts p {
-font-family: Figtree, sans-serif;
-font-size: 16px;
-line-height: 1.5;
-color: #000;
-margin: 0 0 6px;
-text-align: left;
-}
-
-/* Sub-header paragraph */
-.callouts > div > div:first-child > p:nth-of-type(1) {
-font-size: 14px;
-margin-bottom: 2px;
-}
-
-/* Lists */
-.callouts ul {
-margin: 0 0 8px;
-padding-left: 20px;
-font-size: 16px;
-}
-
-.callouts ul li {
-margin-block: 2px;
-line-height: 1.5;
-}
-
-/* CTA links - styled as buttons */
-main .callouts p:last-child a {
-display: inline-block;
-background: var(--color-wgi-navy, #004174);
-color: #fff !important;
-font-family: Figtree, sans-serif;
-font-size: 14px;
-font-weight: 700;
-text-transform: uppercase;
-text-decoration: none;
-text-align: center;
-padding: 10px 30px;
-border: none;
-border-radius: 2px;
-cursor: pointer;
-letter-spacing: 0.03em;
-line-height: 1;
-margin-top: 8px;
-width: 263px;
-box-sizing: border-box;
-}
-
-/* First callout gets red button */
-main .callouts > div:first-child p:last-child a {
-background: var(--color-wgi-red, #da322a);
-}
-
-main .callouts p:last-child a:hover {
-opacity: 0.9;
-}
-
-/* Desktop layout */
-@media (width >= 900px) {
-.callouts > div {
-flex-direction: row;
-align-items: center;
-padding: 20px;
-}
-
-.callouts > div > div:first-child {
-width: 50%;
-padding: 40px 20px 10px 33px;
-flex-shrink: 0;
-}
-
-.callouts > div > div:last-child {
-width: 50%;
-flex-shrink: 0;
-border-radius: 10px;
-height: 338px;
-overflow: hidden;
-}
-
-.callouts > div > div:last-child picture {
-height: 100%;
-display: block;
-}
-
-.callouts > div > div:last-child img {
-height: 338px;
-object-fit: cover;
-transition: transform 0.5s ease;
-}
-
-.callouts > div:hover > div:last-child img {
-transform: scale(1.08);
-}
-}
+/* Override EDS button defaults */
+main .callouts .button-container { display: contents; }
+main .callouts a.button:any-link { all: unset; cursor: pointer; }
